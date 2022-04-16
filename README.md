@@ -21,6 +21,42 @@
 
 
 
+### 原型设计
+
+---
+
+- 密码登录
+
+  <img src="C:\Users\ASUS\Desktop\密码登录.png" style="zoom:50%;" />
+
+
+
+- 用户注册
+
+  <img src="C:\Users\ASUS\Desktop\用户注册.png" style="zoom:50%;" />
+
+
+
+- 找回密码
+
+  <img src="C:\Users\ASUS\Desktop\邮箱找回.png" style="zoom:50%;" />
+
+
+
+- 设置新密码
+
+  <img src="C:\Users\ASUS\Desktop\设置新密码.png" style="zoom:50%;" />
+
+
+
+- 主页
+
+  <img src="C:\Users\ASUS\Desktop\主页.png" style="zoom:50%;" />
+
+
+
+
+
 ### 数据库设计
 
 ---
