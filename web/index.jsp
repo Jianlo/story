@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>story——分享你的故事</title>
   </head>
   <body>
-  $END$
+  这是主页
   </body>
 </html>
