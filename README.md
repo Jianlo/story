@@ -21,6 +21,20 @@
 
 
 
+### 技术栈
+
+- 开发框架：Spring Framework、SpringMVC
+- 数据库：MySQL
+- 数据库连接池：Druid
+- ORM框架：Mybatis
+- 安全框架：Spring Security
+- 模板引擎：Thymeleaf
+- 分页插件：PageHelper
+- 日志：Log4j
+- 接口文档：Swagger
+
+
+
 ### 原型设计
 
 ---

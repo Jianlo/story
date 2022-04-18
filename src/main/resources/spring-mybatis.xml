@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 加载properties文件-->
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <!--配置Druid连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!--初始化连接池大小-->
+        <property name="initialSize" value="1"/>
+        <!--设置最大连接数-->
+        <property name="maxActive" value="10"/>
+        <!--设置等待时间-->
+        <property name="maxWait" value="5000"/>
+        <!--配置数据源监控的filter-->
+        <property name="filters" value="stat"/>
+    </bean>
+
+    <!--spring-mybatis的核心配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--加载配置好的数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--加载mybatis的配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+
+    </bean>
+
+    <!--配置mapper扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.jian.mapper"/>
+    </bean>
+</beans>

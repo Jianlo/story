@@ -1,12 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022/4/13 17:08:47                           */
+/* Created on:     2022/4/18 16:30:55                           */
 /*==============================================================*/
 
 
 drop table if exists comment;
-
-drop table if exists friend;
 
 drop table if exists letter;
 
@@ -15,6 +13,8 @@ drop table if exists love;
 drop table if exists reading;
 
 drop table if exists story;
+
+drop table if exists subscribe;
 
 drop table if exists tag;
 
@@ -26,23 +26,12 @@ drop table if exists user;
 create table comment
 (
    id                   varchar(255) not null,
+   commentId            varchar(255) not null,
    sid                  varchar(255) not null,
    commenter            varchar(255) not null,
    commentContent       text not null,
    commentTime          varchar(255) not null,
    commentFloor         int not null,
-   primary key (id)
-);
-
-/*==============================================================*/
-/* Table: friend                                                */
-/*==============================================================*/
-create table friend
-(
-   id                   varchar(255) not null,
-   owner                varchar(255) not null,
-   member               varchar(255) not null,
-   time                 varchar(255) not null,
    primary key (id)
 );
 
@@ -54,6 +43,7 @@ create table letter
    id                   varchar(255) not null,
    sender               varchar(255) not null,
    receiver             varchar(255) not null,
+   content              text not null,
    sendTime             varchar(255) not null,
    primary key (id)
 );
@@ -64,8 +54,10 @@ create table letter
 create table love
 (
    id                   varchar(255) not null,
+   loveId               varchar(255) not null,
    sid                  varchar(255) not null,
    fans                 varchar(255) not null,
+   loveTime             varchar(255) not null,
    primary key (id)
 );
 
@@ -75,6 +67,7 @@ create table love
 create table reading
 (
    id                   varchar(255) not null,
+   readId               varchar(255) not null,
    sid                  varchar(255) not null,
    reader               varchar(255) not null,
    readTime             varchar(255) not null,
@@ -88,6 +81,7 @@ create table story
 (
    id                   varchar(255) not null,
    sid                  varchar(255) not null,
+   author               varchar(255) not null,
    title                varchar(255) not null,
    content              text not null,
    createTime           varchar(255) not null,
@@ -96,6 +90,18 @@ create table story
    readNum              int not null,
    commentNum           int not null,
    likeNum              int not null,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: subscribe                                             */
+/*==============================================================*/
+create table subscribe
+(
+   id                   varchar(255) not null,
+   owner                varchar(255) not null,
+   member               varchar(255) not null,
+   subscribeTime        varchar(255) not null,
    primary key (id)
 );
 
