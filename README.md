@@ -30,7 +30,7 @@
 - 安全框架：Spring Security
 - 模板引擎：Thymeleaf
 - 分页插件：PageHelper
-- 日志：Log4j
+- 日志：Log4j2
 - 接口文档：Swagger
 
 

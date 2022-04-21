@@ -3,5 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+    <!--修改mybatis的日志框架为log4j-->
+    <settings>
+        <setting name="log4jImpl" value="LOG4J"/>
+    </settings>
 </configuration>
