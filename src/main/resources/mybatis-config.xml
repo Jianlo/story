@@ -7,4 +7,14 @@
     <settings>
         <setting name="log4jImpl" value="LOG4J"/>
     </settings>
+
+    <!--配置PageHelper分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- 表示使用mysql的分页方法 -->
+            <property name="helperDialect" value="mysql"/>
+            <!-- 分页参数合理化，即不可能到达-1页之类不合理的页数 -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
 </configuration>
