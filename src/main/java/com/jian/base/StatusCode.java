@@ -14,8 +14,8 @@ public enum StatusCode {
     UN_AUTHEN(30, "未经认证"),
     BUSINESS_ERR(40, "业务异常");
 
-    private int code;
-    private String msg;
+    private final int code;
+    private final String msg;
 
     StatusCode(int code,String msg){
         this.code = code;

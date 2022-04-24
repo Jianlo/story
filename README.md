@@ -386,6 +386,7 @@
   | :------: | :------: | :------: |
   |   uid    |  String  |  用户id  |
   | username |  String  |  用户名  |
+  | password |  String  |   密码   |
   |  email   |  String  |   邮箱   |
   | photoUrl |  String  | 头像地址 |
 

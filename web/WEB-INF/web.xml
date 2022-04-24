@@ -21,6 +21,15 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
+    <!--加载spring容器（spring的xml文件）-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-*.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <!--配置spring前端控制器-->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
