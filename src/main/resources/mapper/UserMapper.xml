@@ -29,10 +29,10 @@
     <update id="update" parameterType="com.jian.entity.User">
         update user
         <set>
-            <if test="username != null">username=#{username}</if>
-            <if test="password != null">password=#{password}</if>
-            <if test="photoUrl != null">photoUrl=#{photoUrl}</if>
-            <if test="email != null">email=#{email}</if>
+            <if test="username != null">username=#{username},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="photoUrl != null">photoUrl=#{photoUrl},</if>
+            <if test="email != null">email=#{email},</if>
         </set>
         where uid=#{uid}
     </update>
