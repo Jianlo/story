@@ -7,24 +7,18 @@ import java.util.List;
 
 public interface UserService {
 
-    /**
-     * 用户登录
-     * @param username
-     * @return User
-     */
-    String signIn(String username,String password);
 
     /**
-     * 用户注册
-     * @param signUpDto
+     * 新增一个用户
+     * @param user
      */
-    String signUp(SignUpDto signUpDto);
+    void addUser(User user);
 
     /**
-     * 用户注销
+     * 删除一个用户
      * @param uid
      */
-    String delete(String uid);
+    void delete(String uid);
 
     /**
      * 根据uid查询用户
@@ -47,9 +41,9 @@ public interface UserService {
     List<User> findAll();
 
     /**
-     * 修改密码
-     * @param password
+     * 修改用户信息
+     * @param user
      */
-    String update(String password);
+    void update(User user);
 
 }
