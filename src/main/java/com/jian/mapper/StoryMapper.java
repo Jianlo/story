@@ -1,9 +1,12 @@
 package com.jian.mapper;
 
 import com.jian.entity.Story;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+
+@Mapper
 public interface StoryMapper {
 
     /**

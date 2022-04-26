@@ -1,5 +1,7 @@
 package com.jian.service;
 
+import com.github.pagehelper.PageInfo;
+import com.jian.dto.PageDto;
 import com.jian.entity.Story;
 
 import java.util.List;
@@ -40,27 +42,27 @@ public interface StoryService {
      * @param actionId (1:阅读量；2：评论量；3：点赞量）
      * @return List<Story>
      */
-    List<Story> findAllByActionId(int actionId);
+    PageInfo<Story> findAllByActionId(PageDto pageDto,int actionId);
 
     /**
      * 按作者uid查询故事
      * @param uid
      * @return List<Story>
      */
-    List<Story> findByUid(String uid);
+    PageInfo<Story> findByUid(PageDto pageDto,String uid);
 
     /**
      * 按故事标题查询故事，支持模糊查询
      * @param title
      * @return List<Story>
      */
-    List<Story> findByTitle(String title);
+    PageInfo<Story> findByTitle(PageDto pageDto,String title);
 
     /**
      * 按标签查询故事
      * @param storyTag
      * @return
      */
-    List<Story> findByTag(String storyTag);
+    PageInfo<Story> findByTag(PageDto pageDto,String storyTag);
 
 }

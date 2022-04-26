@@ -669,16 +669,16 @@
 - 请求URL
 
   ```
-  /story/findByCreateTime
+  /story/findAllByActionId
   ```
 
 
 
 - 请求参数
 
-  |  参数名称  | 参数类型 |   说明   |
-  | :--------: | :------: | :------: |
-  | createTime |  String  | 发布时间 |
+  |  参数名称  | 参数类型 | 说明 |
+  | :--------: | :------: | :--: |
+  | createTime |   int    |  0   |
 
 
 
@@ -714,14 +714,16 @@
 - 请求URL
 
   ```
-  /story/findByReadNum
+  /story/findAllByActionId
   ```
 
 
 
 - 请求参数
 
-  无
+  | 参数名称 | 参数类型 | 说明 |
+  | :------: | :------: | :--: |
+  | actionId |   int    |  1   |
 
 
 
@@ -757,14 +759,16 @@
 - 请求URL
 
   ```
-  /story/findByCommentNum
+  /story/findAllByActionId
   ```
 
 
 
 - 请求参数
 
-  无
+  | 参数名称 | 参数类型 | 说明 |
+  | :------: | :------: | :--: |
+  | actionId |   int    |  2   |
 
 
 
@@ -800,14 +804,16 @@
 - 请求URL
 
   ```
-  /story/findByLoveNum
+  /story/findAllByActionId
   ```
 
 
 
 - 请求参数
 
-  无
+  | 参数名称 | 参数类型 | 说明 |
+  | :------: | :------: | :--: |
+  | actionId |   int    |  3   |
 
 
 
@@ -827,47 +833,6 @@
   |   author   |  String  | 故事作者 |
 
 
-
----
-
-###### 查询所有故事
-
-- 请求方式
-
-  ```
-  GET
-  ```
-
-
-
-- 请求URL
-
-  ```
-  /story/findAll
-  ```
-
-
-
-- 请求参数
-
-  无
-
-  
-
-- 返回字段
-
-  |  字段名称  | 字段类型 |   说明   |
-  | :--------: | :------: | :------: |
-  |    sid     |  String  | 故事编号 |
-  |   title    |  String  | 故事标题 |
-  |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
-  |  storyTag  |  String  | 故事标签 |
-  |  readNum   |   int    |  阅读量  |
-  | commentNum |   int    |  评论量  |
-  |  loveNum   |   int    |  点赞量  |
-  |   author   |  String  | 故事作者 |
 
 
 
