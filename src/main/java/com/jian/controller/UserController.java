@@ -8,15 +8,12 @@ import com.jian.entity.User;
 import com.jian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -24,7 +21,6 @@ public class UserController {
 
     //用户登录
     @GetMapping("/user/signIn")
-    @ResponseBody
     public ResultData<Void> signIn(@RequestParam(value = "username", defaultValue = "罗健") String username, @RequestParam(value = "password", defaultValue = "123456") String password){
 
         User user = userService.findByUsername(username);
@@ -43,7 +39,7 @@ public class UserController {
     }
 
     //用户注册
-    @GetMapping("/user/signUp")
+    @PostMapping("/user/signUp")
     public ResultData<Void> signUp(@RequestBody SignUpDto signUpDto){
 
         //判断该用户名是否已被注册
@@ -73,10 +69,11 @@ public class UserController {
     }
 
     //修改用户信息
-    @GetMapping("/user/update")
+    @PostMapping("/user/update")
     public ResultData<Void> update(@RequestBody ProfileDto profileDto){
 
         User user = new User();
+        user.setUid(profileDto.getUid());
         user.setUsername(profileDto.getUsername());
         user.setPassword(profileDto.getPassword());
         user.setEmail(profileDto.getEmail());

@@ -372,28 +372,22 @@
 - 请求URL
 
   ``` 
-  /story/add
+  /story/addStory
   ```
 
 
 
 - 请求参数
 
-  |  参数名称  | 参数类型 |   说明   |
-  | :--------: | :------: | :------: |
-  |    sid     |  String  | 故事编号 |
-  |   title    |  String  | 故事标题 |
-  |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
-  |  storyTag  |  String  | 故事标签 |
-  |  readNum   |   int    |  阅读量  |
-  | commentNum |   int    |  评论量  |
-  |  loveNum   |   int    |  点赞量  |
-  |   author   |  String  | 故事作者 |
-
+  | 参数名称 | 参数类型 |   说明   |
+  | :------: | :------: | :------: |
+  |  author  |  String  | 故事作者 |
+  |  title   |  String  | 故事标题 |
+  | content  |   text   | 故事内容 |
+  | storyTag |  String  | 故事标签 |
   
-
+  
+  
 - 返回字段
 
   无
@@ -457,8 +451,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -508,8 +502,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -554,8 +548,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -599,8 +593,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -644,8 +638,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -689,8 +683,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -734,8 +728,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -779,8 +773,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -824,8 +818,8 @@
   |    sid     |  String  | 故事编号 |
   |   title    |  String  | 故事标题 |
   |  content   |   text   | 故事内容 |
-  | createTime |  String  | 发布时间 |
-  | updateTime |  String  | 修改时间 |
+  | createTime |   Date   | 发布时间 |
+  | updateTime |   Date   | 修改时间 |
   |  storyTag  |  String  | 故事标签 |
   |  readNum   |   int    |  阅读量  |
   | commentNum |   int    |  评论量  |
@@ -996,7 +990,7 @@
   |  readId  |  String  | 阅读记录编号 |
   |   sid    |  String  |   故事编号   |
   |  reader  |  String  |     读者     |
-  | readTime |  String  |   阅读时间   |
+  | readTime |   Date   |   阅读时间   |
 
   
 
@@ -1031,7 +1025,7 @@
   |  readId  |  String  | 阅读记录编号 |
   |   sid    |  String  |   故事编号   |
   |  reader  |  String  |     读者     |
-  | readTime |  String  |   阅读时间   |
+  | readTime |   Date   |   阅读时间   |
 
   
 
@@ -1142,7 +1136,7 @@
   |  readId  |  String  | 阅读记录编号 |
   |   sid    |  String  |   故事编号   |
   |  reader  |  String  |     读者     |
-  | readTime |  String  |   阅读时间   |
+  | readTime |   Date   |   阅读时间   |
 
 
 
@@ -1169,7 +1163,7 @@
   | 参数名称 | 参数类型 |   说明   |
   | :------: | :------: | :------: |
   |  reader  |  String  |   读者   |
-  | readTime |  String  | 阅读时间 |
+  | readTime |   Date   | 阅读时间 |
 
   
 
@@ -1180,7 +1174,7 @@
   |  readId  |  String  | 阅读记录编号 |
   |   sid    |  String  |   故事编号   |
   |  reader  |  String  |     读者     |
-  | readTime |  String  |   阅读时间   |
+  | readTime |   Date   |   阅读时间   |
 
 
 
@@ -1212,7 +1206,7 @@
   |      sid       |  String  |   故事编号   |
   |   commenter    |  String  |    评论人    |
   | commentContent |   text   |   评论内容   |
-  |  commentTime   |  String  |   评论时间   |
+  |  commentTime   |   Date   |   评论时间   |
   |  commentFloor  |  String  |   评论楼层   |
 
   
@@ -1323,7 +1317,7 @@
   |      sid       |  String  |   故事编号   |
   |   commenter    |  String  |    评论人    |
   | commentContent |   text   |   评论内容   |
-  |  commentTime   |  String  |   评论时间   |
+  |  commentTime   |   Date   |   评论时间   |
   |  commentFloor  |  String  |   评论楼层   |
 
 
@@ -1355,7 +1349,7 @@
   |  loveId  |  String  | 点赞记录编号 |
   |   sid    |  String  |   故事编号   |
   |   fans   |  String  |    点赞人    |
-  | loveTime |  String  |   点赞时间   |
+  | loveTime |   Date   |   点赞时间   |
 
   
 
@@ -1424,7 +1418,7 @@
   | :-----------: | :------: | :------: |
   |     owner     |  String  |   主人   |
   |    member     |  String  |   成员   |
-  | subscribeTime |  String  | 关注时间 |
+  | subscribeTime |   Date   | 关注时间 |
 
   
 
@@ -1501,7 +1495,7 @@
   | :-------: | :------: | :------: |
   |   owner   |  String  |   主人   |
   |  member   |  String  |   成员   |
-  | subscribe |  String  | 关注时间 |
+  | subscribe |   Date   | 关注时间 |
 
   
 
@@ -1538,7 +1532,7 @@
   | :-------: | :------: | :------: |
   |   owner   |  String  |   主人   |
   |  member   |  String  |   成员   |
-  | subscribe |  String  | 关注时间 |
+  | subscribe |   Date   | 关注时间 |
 
   
 
@@ -1569,7 +1563,7 @@
   |  sender  |  String  |  发送者  |
   | receiver |  String  |  接收者  |
   |          |   text   | 私信内容 |
-  | sendTime |  String  | 发送时间 |
+  | sendTime |   Date   | 发送时间 |
 
   
 
@@ -1612,6 +1606,6 @@
   |  sender  |  String  |  发送者  |
   | receiver |  String  |  接收者  |
   | content  |   text   | 私信内容 |
-  | sendTime |  String  | 发送时间 |
+  | sendTime |   Date   | 发送时间 |
 
   

@@ -1,7 +1,8 @@
 package com.jian.service;
 
 import com.github.pagehelper.PageInfo;
-import com.jian.dto.PageDto;
+import com.jian.dto.StoryConditionQueryDto;
+import com.jian.dto.StoryPageDto;
 import com.jian.entity.Story;
 
 import java.util.List;
@@ -39,30 +40,30 @@ public interface StoryService {
 
     /**
      * 根据发布日期、阅读量、评论量、点赞量查询所有故事
-     * @param actionId (1:阅读量；2：评论量；3：点赞量）
+     * @param storyPageDto
      * @return List<Story>
      */
-    PageInfo<Story> findAllByActionId(PageDto pageDto,int actionId);
+    PageInfo<Story> findAllByActionId(StoryPageDto storyPageDto);
 
     /**
      * 按作者uid查询故事
-     * @param uid
+     * @param storyConditionQueryDto
      * @return List<Story>
      */
-    PageInfo<Story> findByUid(PageDto pageDto,String uid);
+    PageInfo<Story> findByUid(StoryConditionQueryDto storyConditionQueryDto);
 
     /**
      * 按故事标题查询故事，支持模糊查询
-     * @param title
+     * @param storyConditionQueryDto
      * @return List<Story>
      */
-    PageInfo<Story> findByTitle(PageDto pageDto,String title);
+    PageInfo<Story> findByTitle(StoryConditionQueryDto storyConditionQueryDto);
 
     /**
      * 按标签查询故事
-     * @param storyTag
-     * @return
+     * @param storyConditionQueryDto
+     * @return List<Story>
      */
-    PageInfo<Story> findByTag(PageDto pageDto,String storyTag);
+    PageInfo<Story> findByTag(StoryConditionQueryDto storyConditionQueryDto);
 
 }

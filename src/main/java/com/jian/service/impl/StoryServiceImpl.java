@@ -2,14 +2,13 @@ package com.jian.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jian.dto.PageDto;
+import com.jian.dto.StoryConditionQueryDto;
+import com.jian.dto.StoryPageDto;
 import com.jian.entity.Story;
 import com.jian.mapper.StoryMapper;
 import com.jian.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class StoryServiceImpl implements StoryService {
@@ -19,44 +18,50 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public void addStory(Story story) {
+        storyMapper.addStory(story);
 
     }
 
     @Override
     public void deleteBySid(String sid) {
+        storyMapper.deleteBySid(sid);
 
     }
 
     @Override
     public void updateStory(Story story) {
+        storyMapper.update(story);
 
     }
 
     @Override
     public Story findBySid(String sid) {
-        return null;
+        return storyMapper.findBySid(sid);
     }
 
     @Override
-    public PageInfo<Story> findAllByActionId(PageDto pageDto, int actionId) {
-        PageHelper.startPage(pageDto.getPageIndex(),pageDto.getPageSize());
-        return new PageInfo<>(storyMapper.findAllByActionId(actionId));
+    public PageInfo<Story> findAllByActionId(StoryPageDto storyPageDto) {
+        PageHelper.startPage(storyPageDto.getPageIndex(), storyPageDto.getPageSize());
+        return new PageInfo<>(storyMapper.findAllByActionId(storyPageDto.getActionId()));
 
     }
 
     @Override
-    public PageInfo<Story> findByUid(PageDto pageDto, String uid) {
-        return null;
+    public PageInfo<Story> findByUid(StoryConditionQueryDto storyConditionQueryDto) {
+        PageHelper.startPage(storyConditionQueryDto.getPageIndex(),storyConditionQueryDto.getPageSize());
+        return new PageInfo<>(storyMapper.findByUid(storyConditionQueryDto.getCondition()));
     }
 
     @Override
-    public PageInfo<Story> findByTitle(PageDto pageDto, String title) {
-        return null;
+    public PageInfo<Story> findByTitle(StoryConditionQueryDto storyConditionQueryDto) {
+        PageHelper.startPage(storyConditionQueryDto.getPageIndex(),storyConditionQueryDto.getPageSize());
+        return new PageInfo<>(storyMapper.findByTitle(storyConditionQueryDto.getCondition()));
     }
 
     @Override
-    public PageInfo<Story> findByTag(PageDto pageDto, String storyTag) {
-        return null;
+    public PageInfo<Story> findByTag(StoryConditionQueryDto storyConditionQueryDto) {
+        PageHelper.startPage(storyConditionQueryDto.getPageIndex(),storyConditionQueryDto.getPageSize());
+        return new PageInfo<>(storyMapper.findByTag(storyConditionQueryDto.getCondition()));
     }
 
 

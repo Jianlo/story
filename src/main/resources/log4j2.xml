@@ -29,7 +29,7 @@
             <AppenderRef ref="running-log" /> </Logger> -->
 
         <!-- 日志级别：ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF 级别越低日志的粒度越细，包含的内容越多-->
-        <Root level="info">
+        <Root level="debug">
             <!-- 这里是输入到文件，很重要-->
             <AppenderRef ref="running-log" />
             <!-- 这里是输入到控制台-->

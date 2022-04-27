@@ -19,11 +19,13 @@
         <set>
             <if test="title != null">title=#{title},</if>
             <if test="content != null">content=#{content},</if>
+            <if test="storyTag != null">storyTag=#{storyTag},</if>
             <if test="updateTime != null">updateTime=#{updateTime},</if>
-            <if test="readNum != null">readNum=#{readNum},</if>
-            <if test="commentNum != null">commentNum=#{commentNum},</if>
-            <if test="loveNum != null">loveNum=#{loveNum},</if>
+            <if test="readNum != 0">readNum=#{readNum},</if>
+            <if test="commentNum != 0">commentNum=#{commentNum},</if>
+            <if test="loveNum != 0">loveNum=#{loveNum},</if>
         </set>
+        where sid=#{sid}
     </update>
 
     <select id="findAllByActionId" resultType="com.jian.entity.Story">
