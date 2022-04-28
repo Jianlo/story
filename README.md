@@ -1123,7 +1123,7 @@
 - 请求URL
 
   ```
-  /comment/add
+  /comment/addComment
   ```
 
 
@@ -1137,10 +1137,9 @@
   |   commenter    |  String  |    评论人    |
   | commentContent |   text   |   评论内容   |
   |  commentTime   |   Date   |   评论时间   |
-  |  commentFloor  |  String  |   评论楼层   |
-
   
 
+  
 - 返回字段
 
   无
@@ -1181,7 +1180,7 @@
 
 
 
-###### 删除所有阅读记录
+###### 删除所有评论记录
 
 - 请求方式
 
@@ -1248,7 +1247,6 @@
   |   commenter    |  String  |    评论人    |
   | commentContent |   text   |   评论内容   |
   |  commentTime   |   Date   |   评论时间   |
-  |  commentFloor  |  String  |   评论楼层   |
 
 
 
