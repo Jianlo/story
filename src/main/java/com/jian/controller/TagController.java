@@ -39,8 +39,8 @@ public class TagController {
 
 
     //删除一个标签
-    @GetMapping("/tag/delete")
-    public ResultData<Void> delete(@RequestParam String tid){
+    @GetMapping("/tag/deleteByTid")
+    public ResultData<Void> deleteByTid(@RequestParam String tid){
         tagService.delete(tid);
         return ResultData.of(StatusCode.SUCCESS.getCode(), "标签删除成功");
     }

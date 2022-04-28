@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jian.mapper.ReadingMapper">
+
+    <insert id="add" parameterType="com.jian.entity.Reading" useGeneratedKeys="true" keyProperty="id">
+        insert into story.reading(id, readId, sid, reader, readTime)
+        values (#{id},#{readId},#{sid},#{reader},#{readTime})
+    </insert>
+
+    <update id="update" parameterType="com.jian.entity.Reading">
+        update story.reading
+        set readTime=#{readTime}
+        where readId=#{readId}
+    </update>
+
+    <delete id="deleteByReadId">
+        delete from story.reading
+        where readId=#{readId}
+    </delete>
+
+    <delete id="deleteAll">
+        delete from story.reading
+        where reader=#{reader}
+    </delete>
+
+    <select id="findAll" resultType="com.jian.entity.Reading">
+        select * from story.reading where reader=#{reader}
+    </select>
+
+    <select id="findBySidAndReader" parameterType="com.jian.dto.ReadingDto" resultType="com.jian.entity.Reading">
+        select * from story.reading where sid=#{sid} and reader=#{reader}
+    </select>
+</mapper>
