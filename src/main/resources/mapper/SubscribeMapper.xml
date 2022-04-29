@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jian.mapper.SubscribeMapper">
+
+    <insert id="add" parameterType="com.jian.entity.Subscribe" useGeneratedKeys="true" keyProperty="id">
+        insert into story.subscribe(id, owner, member, subscribeTime)
+        values (#{id},#{owner},#{member},#{subscribeTime})
+    </insert>
+
+    <delete id="delete" parameterType="com.jian.dto.SubscribeDto">
+        delete from story.subscribe where owner=#{owner} and member=#{member}
+    </delete>
+
+    <select id="findAll" resultType="com.jian.entity.Subscribe">
+        select * from story.subscribe where owner=#{owner}
+    </select>
+
+    <select id="findByMember" resultType="com.jian.entity.Subscribe">
+        select * from story.subscribe where owner=#{owner} and member=#{member}
+    </select>
+</mapper>
