@@ -1265,7 +1265,7 @@
 - 请求URL
 
   ```
-  /love/add
+  /love/addLove
   ```
 
 
@@ -1300,7 +1300,7 @@
 - 请求URL
 
   ```
-  /comment/delete
+  /comment/deleteLove
   ```
 
 

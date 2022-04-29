@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jian.mapper.LoveMapper">
+
+    <insert id="add" parameterType="com.jian.entity.Love" useGeneratedKeys="true" keyProperty="id">
+        insert into story.love(id, loveId, sid, fans, loveTime)
+        values (#{id},#{loveId},#{sid},#{fans},#{loveTime})
+    </insert>
+
+    <delete id="delete" parameterType="com.jian.dto.LoveDto">
+        delete from story.love where sid=#{sid} and fans=#{fans}
+    </delete>
+</mapper>
