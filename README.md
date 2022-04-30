@@ -1479,7 +1479,7 @@
 - 请求URL
 
   ```
-  /letter/add
+  /letter/sendLetter
   ```
 
 
@@ -1490,7 +1490,7 @@
   | :------: | :------: | :------: |
   |  sender  |  String  |  发送者  |
   | receiver |  String  |  接收者  |
-  |          |   text   | 私信内容 |
+  | content  |   text   | 私信内容 |
   | sendTime |   Date   | 发送时间 |
 
   

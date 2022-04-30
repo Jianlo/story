@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jian.mapper.LetterMapper">
+
+    <insert id="add" parameterType="com.jian.entity.Letter" useGeneratedKeys="true" keyProperty="id">
+        insert into story.letter(id, sender, receiver, content, sendTime)
+        values (#{id},#{sender},#{receiver},#{content},#{sendTime})
+    </insert>
+
+    <select id="findAll" resultType="com.jian.entity.Letter">
+        select * from story.letter where sender=#{sender} and receiver=#{receiver} order by sendTime
+    </select>
+
+</mapper>
