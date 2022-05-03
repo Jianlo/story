@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,8 +10,9 @@
 
 
 
+  <base th:href="@{/}">
   <!-- Bootstrap core CSS -->
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
 
@@ -34,7 +35,7 @@
 
 
   <!-- Custom styles for this template -->
-  <link href="../css/signIn.css" rel="stylesheet">
+  <link href="css/signIn.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -49,17 +50,17 @@
 
   <main role="main" class="container" style="margin-top: 100px">
     <div class="row justify-content-md-center text-center">
-      <form class="form-signin bg-white col-md-auto">
+      <form class="form-signin bg-white col-md-auto" method="post" th:action="@{/user/signIn}" th:object="${signInDto}">
         <h1 class="h5 mb-4 font-weight-normal">用户登录</h1>
-        <input type="email" id="inputUsername" class="form-control mb-3" placeholder="用户名" required autofocus>
-        <input type="password" id="inputPassword" class="form-control mb-3" placeholder="密码" required>
+        <input th:field="*{username}" type="text" id="inputUsername" class="form-control mb-3" placeholder="用户名" required autofocus>
+        <input th:field="*{password}" type="password" id="inputPassword" class="form-control mb-3" placeholder="密码" required>
         <div class="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me">记住密码
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">登录</button>
-        <p class="">没有账号？<a href="#">立即注册</a></p>
+        <p class="">没有账号？<a href="/story/register">立即注册</a></p>
       </form>
     </div>
   </main>

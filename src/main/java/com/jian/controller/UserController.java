@@ -4,47 +4,68 @@ import com.jian.base.ResultData;
 import com.jian.base.StatusCode;
 import com.jian.dto.ProfileDto;
 import com.jian.dto.SignUpDto;
+import com.jian.dto.SignInDto;
 import com.jian.entity.User;
 import com.jian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@RestController
+@Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    //用户登录
-    @GetMapping("/user/signIn")
-    public ResultData<Void> signIn(@RequestParam(value = "username", defaultValue = "罗健") String username, @RequestParam(value = "password", defaultValue = "123456") String password){
+    //登录界面
+    @RequestMapping("/")
+    public String login(Model model){
+        model.addAttribute("signInDto",new SignInDto());
+        return "signIn";
+    }
 
-        User user = userService.findByUsername(username);
+    //注册界面
+    @RequestMapping("/register")
+    public String register(Model model){
+        model.addAttribute("signUpDto",new SignUpDto());
+        return "signUp";
+    }
+
+
+    //用户登录
+    @PostMapping("/user/signIn")
+    public String signIn(@ModelAttribute SignInDto signInDto){
+
+        User user = userService.findByUsername(signInDto.getUsername());
         if (user != null){
-            if (user.getPassword().equals(password)){
-                return ResultData.of(StatusCode.SUCCESS.getCode(), "登录成功");
+            if (user.getPassword().equals(signInDto.getPassword())){
+                System.out.println("登录成功");
+                return "index";
             }
             else {
-                return ResultData.of(StatusCode.ERROR.getCode(), "密码错误");
+                System.out.println("密码错误");
+                return "signIn";
             }
         }
         else {
-            return ResultData.of(StatusCode.ERROR.getCode(), "用户名不存在");
+            System.out.println("用户名不存在");
+            return "signIn";
         }
 
     }
 
     //用户注册
     @PostMapping("/user/signUp")
-    public ResultData<Void> signUp(@RequestBody SignUpDto signUpDto){
+    public String signUp(@ModelAttribute SignUpDto signUpDto){
 
         //判断该用户名是否已被注册
         if (userService.findByUsername(signUpDto.getUsername()) != null){
-            return ResultData.of(StatusCode.ERROR.getCode(),"该用户名已被注册");
+            System.out.println("该用户名已被注册");
+            return "signUp";
         }
         else {
             User user = new User();
@@ -63,7 +84,8 @@ public class UserController {
             user.setPhotoUrl(defaultPhotoUrl);
 
             userService.addUser(user);
-            return ResultData.of(StatusCode.SUCCESS.getCode(), "注册成功");
+            System.out.println("注册成功");
+            return "signIn";
         }
 
     }
