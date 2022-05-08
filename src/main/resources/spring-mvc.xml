@@ -17,6 +17,7 @@
     <mvc:default-servlet-handler/>
     <mvc:resources location="/WEB-INF/css/" mapping="/css/**" />
     <mvc:resources location="/WEB-INF/js/" mapping="/js/**" />
+    <mvc:resources location="/WEB-INF/editormd/" mapping="/editormd/**" />
 
     <!--让所有的Controller能够解析，注意<mvc:annotation-driven>是用来解决@ResponseBody传输字符串中文乱码问题-->
     <mvc:annotation-driven>

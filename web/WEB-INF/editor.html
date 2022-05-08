@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+
+    <!--Editor.md-->
+    <link rel="stylesheet" href="editormd/css/editormd.css" th:href="@{/editormd/css/editormd.css}"/>
+    <link rel="stylesheet" href="editormd/css/editormd.min.css" th:href="@{/editormd/css/editormd.min.css}"/>
+
+    <script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+    <script src="editormd/editormd.min.js" th:src="@{/editormd/editormd.min.js}"></script>
+</head>
+
+<body>
+    <div>
+        <input class="" id="title" placeholder="输入故事标题"/>
+        <input class="" id="tag" placeholder="标签"/>
+        <input id="saveStory" class="" type="button" value="发布"/>
+        <input id="backIndex" class="" type="button" value="返回首页"/>
+    </div>
+
+    <!-- 文章的主体内容 textarea -->
+    <div id="article-content">
+        <textarea name="content" id="content" style="display:none;"></textarea>
+    </div>
+
+
+
+    <script type="text/javascript">
+        var editor;
+
+        //window.onload = function(){ }
+        $(function() {
+            editor = editormd("article-content", {
+                width:"95%",
+                height:500,
+                syncScrolling:"single",
+                path:"editormd/lib/",
+                // 自定义的增强配置！
+                saveHTMLToTextarea:true,    // 保存 HTML 到 Textarea
+                emoji:true, // 开启表情的功能！ 图片的本地配置！
+                // theme: "light",//工具栏主题
+                // previewTheme: "dark",//预览主题
+                // editorTheme: "pastel-on-dark",//编辑主题
+                // markdown的配置！
+                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                flowChart : true,             // 开启流程图支持，默认关闭
+                sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+
+                //图片上传
+                // imageUpload : true,
+                // imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                // imageUploadURL : "/article/file/upload", // 文件上传的处理请求！
+
+                /*指定需要显示的功能按钮*/
+                toolbarIcons : function() {
+                    return ["undo","redo","|",
+                        "bold","del","italic","quote","ucwords","uppercase","lowercase","|",
+                        "h1","h2","h3","h4","h5","h6","|",
+                        "list-ul","list-ol","hr","|",
+                        "link","reference-link","image","code","preformatted-text",
+                        "code-block","table","datetime","emoji","html-entities","pagebreak","|",
+                        "goto-line","watch","preview","fullscreen","clear","search","|",
+                        //"help","info",
+                        "releaseIcon", "index"]
+                }
+
+            });
+        });
+
+        $('#saveStory').click(function () {
+            console.log("xxxxxxxxxxxxx")
+            var title = $('#title').val()
+            var tag = $('tag').val()
+            var content = encodeURIComponent(editor.getMarkdown())
+
+            var obj = {
+                'title':title,
+                'tag':tag,
+                'content':content
+            }
+            $.ajax({
+                type:"POST",
+                url:'/story/addStory',
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: obj,
+                dataType: 'json',
+                success:function (data) {
+                    window.location.href='/index'
+                }
+            })
+            
+        })
+
+    </script>
+
+</body>
+
+
+</html>

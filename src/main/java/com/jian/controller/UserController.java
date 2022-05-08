@@ -39,6 +39,18 @@ public class UserController {
         return "signUp";
     }
 
+    //写故事界面
+    @RequestMapping("/write")
+    public String write(){
+        return "editor";
+    }
+
+    //主页
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
+
 
     //用户登录
     @PostMapping("/user/signIn")
