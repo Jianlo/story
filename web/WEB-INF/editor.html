@@ -4,37 +4,125 @@
     <meta charset="UTF-8">
     <title>Editor</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
     <!--Editor.md-->
     <link rel="stylesheet" href="editormd/css/editormd.css" th:href="@{/editormd/css/editormd.css}"/>
     <link rel="stylesheet" href="editormd/css/editormd.min.css" th:href="@{/editormd/css/editormd.min.css}"/>
 
+    <!-- jquery-->
     <script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+
+    <!-- Bootstrap core JS -->
+    <script src="js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    <!--Editor.md-->
     <script src="editormd/editormd.min.js" th:src="@{/editormd/editormd.min.js}"></script>
+
+
+    <style>
+        body {
+            padding-top: 5rem;
+        }
+    </style>
 </head>
 
-<body>
-    <div>
-        <input class="" id="title" placeholder="输入故事标题"/>
-        <input class="" id="tag" placeholder="标签"/>
-        <input id="saveStory" class="" type="button" value="发布"/>
-        <input id="backIndex" class="" type="button" value="返回首页"/>
-    </div>
+<body style="background-color: #f6f6f6;">
 
-    <!-- 文章的主体内容 textarea -->
-    <div id="article-content">
-        <textarea name="content" id="content" style="display:none;"></textarea>
+
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Navbar</a>
+
+        <div class="dropdown">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">修改信息</a>
+                <a class="dropdown-item" href="#">退出</a>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="container mb-lg-5">
+
+        <div class="row">
+            <div class="input-group mb-3 col-6 ml-5">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">标题</span>
+                </div>
+                <input type="text" id="title" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="col-4 text-right">
+                <a><button id="saveStory" class="btn-sm btn-dark">发布</button></a>
+                <a href="index.html" th:href="@{/index}"><button class="btn-sm btn-dark">返回首页</button></a>
+            </div>
+        </div>
+        <div class="row mb-3 ml-5">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="青春" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    青春
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="家庭">
+                <label class="form-check-label" for="exampleRadios2">
+                    家庭
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="人生">
+                <label class="form-check-label" for="exampleRadios3">
+                    人生
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="校园">
+                <label class="form-check-label" for="exampleRadios4">
+                    校园
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="职场">
+                <label class="form-check-label" for="exampleRadios5">
+                    职场
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios6" value="童年">
+                <label class="form-check-label" for="exampleRadios6">
+                    童年
+                </label>
+            </div>
+        </div>
+        <!-- 文章的主体内容 textarea -->
+        <div id="article-content" class="">
+            <textarea name="content" id="content" style="display:none;"></textarea>
+        </div>
+
     </div>
 
 
 
     <script type="text/javascript">
+
+        //故事作者
+        var author;
+
         var editor;
 
-        //window.onload = function(){ }
         $(function() {
             editor = editormd("article-content", {
                 width:"95%",
-                height:500,
+                height:600,
                 syncScrolling:"single",
                 path:"editormd/lib/",
                 // 自定义的增强配置！
@@ -67,33 +155,48 @@
                 }
 
             });
+
+            //页面一加载，通过ajax获取服务器中session里存的用户信息
+            $.ajax({
+                type: 'GET',
+                url: '/story/getSession',
+                dataType: 'json',
+                success:function (user){
+                    author = user.username
+                }
+            })
+
         });
 
         $('#saveStory').click(function () {
-            console.log("xxxxxxxxxxxxx")
+
+
+
             var title = $('#title').val()
-            var tag = $('tag').val()
+            var storyTag = $("input[name='exampleRadios']:checked").val()
             var content = encodeURIComponent(editor.getMarkdown())
 
             var obj = {
+                'author':author,
                 'title':title,
-                'tag':tag,
+                'storyTag':storyTag,
                 'content':content
             }
             $.ajax({
                 type:"POST",
-                url:'/story/addStory',
+                url:'story/addStory',
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 data: obj,
                 dataType: 'json',
                 success:function (data) {
-                    window.location.href='/index'
+                    console.log("发布成功")
                 }
             })
             
         })
 
     </script>
+
 
 </body>
 

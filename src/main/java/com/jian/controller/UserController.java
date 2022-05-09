@@ -27,30 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //登录界面
-    @RequestMapping("/")
-    public String login(){
-        return "signIn";
-    }
-
-    //注册界面
-    @RequestMapping("/register")
-    public String register(){
-        return "signUp";
-    }
-
-    //写故事界面
-    @RequestMapping("/write")
-    public String write(){
-        return "editor";
-    }
-
-    //主页
-    @RequestMapping("/index")
-    public String index(){
-        return "index";
-    }
-
 
     //用户登录
     @PostMapping("/user/signIn")

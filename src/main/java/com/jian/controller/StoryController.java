@@ -24,7 +24,7 @@ public class StoryController {
 
     //发布新故事
     @PostMapping("/story/addStory")
-    public ResultData<Void> addStory(@RequestBody StoryDto storyDto){
+    public ResultData<Void> addStory(StoryDto storyDto){
 
         //生成故事编号
         String sid = "2222234";
