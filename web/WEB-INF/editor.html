@@ -174,7 +174,7 @@
 
             var title = $('#title').val()
             var storyTag = $("input[name='exampleRadios']:checked").val()
-            var content = encodeURIComponent(editor.getMarkdown())
+            var content = editor.getMarkdown()
 
             var obj = {
                 'author':author,

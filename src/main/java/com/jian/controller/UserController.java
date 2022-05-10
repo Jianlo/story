@@ -70,7 +70,7 @@ public class UserController {
                         }
                     }
                 }
-                return "index";
+                return "redirect:/index";
             }
             else {
                 logger.info("密码错误");
