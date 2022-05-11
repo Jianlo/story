@@ -47,13 +47,13 @@ public class PageController {
 
         //分页查询所有故事
         StoryPageDto storyPageDto = new StoryPageDto();
-        storyPageDto.setPageSize(2);
+        storyPageDto.setPageSize(5);
         storyPageDto.setPageIndex(1);
         storyPageDto.setActionId(1);
         PageInfo<Story> storyPage = storyService.findAllByActionId(storyPageDto);
 
         //获取结果集长度
-        int length = storyPage.getPageSize();
+        int length = storyPage.getSize();
 
         //新建一个List用于获取PageInfo里面的结果集
         List<Story> storyList = new ArrayList<Story>();

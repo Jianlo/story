@@ -67,8 +67,8 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-      <a class="dropdown-item" href="#">修改信息</a>
-      <a class="dropdown-item" href="#">退出</a>
+      <a class="dropdown-item" href="##">修改信息</a>
+      <a class="dropdown-item" href="##">退出</a>
     </div>
   </div>
 
@@ -94,30 +94,30 @@
 
         <!-- 标签组-->
         <div class="d-inline">
-          <a href="#"><button class="btn btn-lg btn-secondary mr-2"></button></a>
-          <a href="#"><button class="btn btn-lg btn-primary mr-2"></button></a>
-          <a href="#"><button class="btn btn-lg btn-danger mr-2"></button></a>
-          <a href="#"><button class="btn btn-lg btn-warning mr-2"></button></a>
-          <a href="#"><button class="btn btn-lg btn-light mr-2"></button></a>
-          <a href="#"><button class="btn btn-lg btn-success mr-2"></button></a>
+          <a href="##"><button class="btn btn-lg btn-secondary mr-2"></button></a>
+          <a href="##"><button class="btn btn-lg btn-primary mr-2"></button></a>
+          <a href="##"><button class="btn btn-lg btn-danger mr-2"></button></a>
+          <a href="##"><button class="btn btn-lg btn-warning mr-2"></button></a>
+          <a href="##"><button class="btn btn-lg btn-light mr-2"></button></a>
+          <a href="##"><button class="btn btn-lg btn-success mr-2"></button></a>
         </div>
 
         <!-- 导航条-->
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link active" href="#">推荐</a>
+            <a class="nav-link active" href="##">推荐</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">热门</a>
+            <a class="nav-link" href="##">热门</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">我的</a>
+            <a class="nav-link" href="##">我的</a>
           </li>
         </ul>
 
         <!--文章列表-->
-        <ul class="list-group " th:each="story : ${storyList}">
-          <li class="list-group-item bg-white">
+        <ul class="list-group " id="storyul">
+          <li class="list-group-item bg-white storyli" th:each="story : ${storyList}" >
             <div class="card border-0">
               <div class="card-body">
                 <div class="mb-3">
@@ -125,50 +125,76 @@
                   <p class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</p>
                 </div>
                 <h6 class="card-title mb-2 " th:text="${story.title}">Card Title</h6>
-                <div id="storymd" class="card-text" th:text="${story.content}">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                </div>
 
-                <div id="doc-content">
-                  <textarea style="display: none" th:text="${story.content}"></textarea>
+                <div id="doc-content" th:id="'content'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">
+                  <textarea style="display: none" th:text="${story.content}">
+                     Some quick example text to build on the card title and make up the bulk of the card's content.
+                  </textarea>
                 </div>
 
                 <div class="text-right">
                   <!--阅读量-->
-                  <a href="#" class="card-link">
+                  <a href="##" class="card-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                       <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                       <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                     </svg>
                   </a>
                   <!--评论-->
-                  <a class="card-link" data-toggle="collapse" href="#collapseExample">
+                  <a class="card-link" data-toggle="collapse" href="#collapseExample" th:href="@{'#collapse'+${story.id}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
                       <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                     </svg>
                   </a>
-                  <!-- 评论板块-->
-                  <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                    </div>
-                  </div>
                   <!--点赞-->
-                  <a href="#" class="card-link">
+                  <a href="##" class="card-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                   </a>
-                  <a href="#" class="card-link">
+                  <a href="##" class="card-link" id="show" onclick="show(this)"  style="display:block">
                     <span>阅读全文</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                     </svg>
                   </a>
-
+                  <a href="##" class="card-link" id="hidden" onclick="shou(this)"  style="display:none">
+                    <span>收起</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                    </svg>
+                  </a>
                 </div>
 
               </div>
+            </div>
+
+            <!-- 评论板块-->
+            <div class="collapse mt-3" id="collapseExample" th:id="'collapse'+${story.id}">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <img src="..">
+                        <p class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</p>
+                      </div>
+                      <div class="card-text">TypeScript 是由微软开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程。</div>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <img src="..">
+                        <p class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</p>
+                      </div>
+                      <div class="card-text">TypeScript 是由微软开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程。</div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </li>
 
@@ -360,20 +386,47 @@
 
 
     <script>
-      //把数据库中经过编码后的markdown解析为html显示
-      var editor;
-      $(function () {
-          editor = editormd.markdownToHTML("doc-content", {
-          htmlDecode :"style, script, iframe",
-          emoji           : true,
-          taskList        : true,
-          tex             : true,  // 默认不解析
-          flowChart       : true,  // 默认不解析
-          sequenceDiagram : true,  // 默认不解析
-          codeFold: true,
+      //把数据库中的markdown解析为html显示
+      //循环解析ul中每个li里的markdown
+      $(function (){
+        var lis = document.getElementById('storyul').getElementsByClassName('storyli')
+        for (var i=0;i<lis.length;i++){
 
-        });
+          var id = lis[i].getElementsByClassName('getid')[0].getAttribute("id")
+          var eidtor;
+          eidtor = editormd.markdownToHTML(id, {
+            htmlDecode :"style, script, iframe",
+            emoji           : true,
+            taskList        : true,
+            tex             : true,  // 默认不解析
+            flowChart       : true,  // 默认不解析
+            sequenceDiagram : true,  // 默认不解析
+            codeFold: true,
+
+          })
+
+
+
+
+
+        }
       })
+
+      //阅读全文
+      function show(e) {
+        e.style.display="none"
+        e.nextElementSibling.style.display="block"
+        var par = e.parentNode
+        par.previousElementSibling.style.height="100%"
+      }
+
+      //收起
+      function shou(e) {
+        e.style.display="none"
+        e.previousElementSibling.style.display="block"
+        var par = e.parentNode
+        par.previousElementSibling.style.height="100px"
+      }
 
     </script>
 
