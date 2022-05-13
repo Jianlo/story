@@ -41,8 +41,8 @@
         select * from story.story where sid=#{sid}
     </select>
 
-    <select id="findByUid" resultType="com.jian.entity.Story">
-        select * from story.story where author=#{uid} order by createTime desc
+    <select id="findByUsername" resultType="com.jian.entity.Story">
+        select * from story.story where author=#{username} order by createTime desc
     </select>
 
     <select id="findByTitle" resultType="com.jian.entity.Story">

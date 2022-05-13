@@ -96,7 +96,7 @@ public class UserController {
         else {
             User user = new User();
             //新用户的默认头像地址
-            String defaultPhotoUrl = "http://photo.com/default.jpg";
+            String defaultPhotoUrl = "images/profile.jpg";
 
             //为新用户生成唯一uid
             user.setUid("322342");

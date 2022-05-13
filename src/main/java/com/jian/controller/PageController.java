@@ -3,8 +3,10 @@ package com.jian.controller;
 import com.github.pagehelper.PageInfo;
 import com.jian.dto.StoryPageDto;
 import com.jian.entity.Story;
+import com.jian.entity.Subscribe;
 import com.jian.entity.User;
 import com.jian.service.StoryService;
+import com.jian.service.SubscribeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,8 @@ public class PageController {
 
     @Autowired
     private StoryService storyService;
+    @Autowired
+    private SubscribeService subscribeService;
 
     //登录界面
     @RequestMapping("/")
@@ -43,7 +47,7 @@ public class PageController {
 
     //主页
     @GetMapping("/index")
-    public String index(Model model){
+    public String index(Model model,HttpSession session){
 
         //分页查询所有故事
         StoryPageDto storyPageDto = new StoryPageDto();
@@ -64,6 +68,13 @@ public class PageController {
         }
 
         model.addAttribute("storyList",storyList);
+
+        //查询用户所有的好友
+        User user = (User) session.getAttribute("user");
+        String owner = user.getUsername();
+        List<Subscribe> subscribeList = subscribeService.findAll(owner);
+        model.addAttribute("subscribeList",subscribeList);
+
         return "index";
     }
 

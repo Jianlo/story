@@ -45,11 +45,11 @@ public interface StoryMapper {
     List<Story> findAllByActionId(int actionId);
 
     /**
-     * 按作者uid查询故事
-     * @param uid
+     * 按作者username查询故事
+     * @param username
      * @return List<Story>
      */
-    List<Story> findByUid(String uid);
+    List<Story> findByUsername(String username);
 
     /**
      * 按故事标题查询故事，支持模糊查询

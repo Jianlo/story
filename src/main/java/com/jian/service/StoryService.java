@@ -46,11 +46,11 @@ public interface StoryService {
     PageInfo<Story> findAllByActionId(StoryPageDto storyPageDto);
 
     /**
-     * 按作者uid查询故事
+     * 按作者username查询故事
      * @param storyConditionQueryDto
      * @return List<Story>
      */
-    PageInfo<Story> findByUid(StoryConditionQueryDto storyConditionQueryDto);
+    PageInfo<Story> findByUsername(StoryConditionQueryDto storyConditionQueryDto);
 
     /**
      * 按故事标题查询故事，支持模糊查询

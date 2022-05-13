@@ -87,10 +87,10 @@ public class StoryController {
         return ResultData.of(storyService.findAllByActionId(storyPageDto));
     }
 
-    //根据作者uid查询所有故事
-    @PostMapping("/story/findByUid")
-    public ResultData<PageInfo<Story>> findByUid(@RequestBody StoryConditionQueryDto storyConditionQueryDto){
-        return ResultData.of(storyService.findByUid(storyConditionQueryDto));
+    //根据作者用户名查询所有故事
+    @PostMapping("/story/findByUsername")
+    public ResultData<PageInfo<Story>> findByUsername(@RequestBody StoryConditionQueryDto storyConditionQueryDto){
+        return ResultData.of(storyService.findByUsername(storyConditionQueryDto));
     }
 
     //根据标题查询所有故事

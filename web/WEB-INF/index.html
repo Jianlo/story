@@ -108,10 +108,10 @@
             <a class="nav-link active" href="##">推荐</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="##">热门</a>
+            <a class="nav-link" id="hotStory" href="##">热门</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="##">我的</a>
+            <a class="nav-link" id="myStory" href="##">我的</a>
           </li>
         </ul>
 
@@ -121,7 +121,7 @@
             <div class="card border-0">
               <div class="card-body">
                 <div class="mb-3">
-                  <img src="..">
+                  <img src="images/profile.jpg" height="50" width="50" style="border-radius: 50%;">
                   <p class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</p>
                 </div>
                 <h6 class="card-title mb-2 " th:text="${story.title}">Card Title</h6>
@@ -206,14 +206,20 @@
         <div class="bg-white" >
           <!--头像-->
           <div class="text-center mb-3">
-            <img src=".." class="profileImg mt-lg-5">
+            <img src="images/profile.jpg" th:src="${session.user.photoUrl}" class="profileImg mt-lg-5">
           </div>
           <!--用户名-->
-          <p class="font-weight-bold text-dark text-center">且听龙吟</p>
+          <p class="font-weight-bold text-dark text-center" id="profile_username" th:text="${session.user.username}">且听龙吟</p>
           <!--用户信息-->
           <ul class="list-group list-group-flush mb-3" style="background-color: #343a40;color: white" >
-            <li class="list-group-item list-group-item-light">uid</li>
-            <li class="list-group-item list-group-item-light">邮箱</li>
+            <li class="list-group-item list-group-item-light">
+              uid:
+              <span th:text="${session.user.uid}"></span>
+            </li>
+            <li class="list-group-item list-group-item-light">
+              邮箱:
+              <span th:text="${session.user.email}"></span>
+            </li>
           </ul>
 
           <a href="editor.html" th:href="@{/write}">
@@ -251,11 +257,11 @@
             </div>
 
             <ul class="list-group list-group-flush mt-3" style="height: 350px;overflow: auto">
-              <li class="list-group-item">
+              <li class="list-group-item" th:each="subscribe:${subscribeList}">
                 <div class="row mb-2">
                   <div class="col">
                     <img src=".." height="30px" width="30px">
-                    <p class="d-inline">路人甲</p>
+                    <p class="d-inline" th:text="${subscribe.member}">路人甲</p>
                   </div>
                 </div>
 
@@ -274,103 +280,6 @@
                   </a>
                 </div>
               </li>
-
-              <li class="list-group-item">
-                <div class="row mb-2">
-                  <div class="col">
-                    <img src=".." height="30px" width="30px">
-                    <p class="d-inline">路人甲</p>
-                  </div>
-                </div>
-
-                <div class="text-right">
-                  <a class="card-link">
-                    私信
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                      <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                    </svg>
-                  </a>
-                  <a class="card-link">
-                    取消关注
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                    </svg>
-                  </a>
-                </div>
-              </li>
-
-              <li class="list-group-item">
-                <div class="row mb-2">
-                  <div class="col">
-                    <img src=".." height="30px" width="30px">
-                    <p class="d-inline">路人甲</p>
-                  </div>
-                </div>
-
-                <div class="text-right">
-                  <a class="card-link">
-                    私信
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                      <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                    </svg>
-                  </a>
-                  <a class="card-link">
-                    取消关注
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                    </svg>
-                  </a>
-                </div>
-              </li>
-
-              <li class="list-group-item">
-                <div class="row mb-2">
-                  <div class="col">
-                    <img src=".." height="30px" width="30px">
-                    <p class="d-inline">路人甲</p>
-                  </div>
-                </div>
-
-                <div class="text-right">
-                  <a class="card-link">
-                    私信
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                      <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                    </svg>
-                  </a>
-                  <a class="card-link">
-                    取消关注
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                    </svg>
-                  </a>
-                </div>
-              </li>
-
-              <li class="list-group-item">
-                <div class="row mb-2">
-                  <div class="col">
-                    <img src=".." height="30px" width="30px">
-                    <p class="d-inline">路人甲</p>
-                  </div>
-                </div>
-
-                <div class="text-right">
-                  <a class="card-link">
-                    私信
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                      <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                    </svg>
-                  </a>
-                  <a class="card-link">
-                    取消关注
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                    </svg>
-                  </a>
-                </div>
-              </li>
-
 
 
             </ul>
@@ -410,6 +319,61 @@
 
 
         }
+      })
+
+      //热门故事
+      $('#hotStory').click(function () {
+
+        // 查找阅读量最多的5个故事
+        var pageIndex = 1
+        var pageSize = 5
+        // 按阅读量查询
+        var actionId = 1
+
+        var obj = {
+          'pageIndex':pageIndex,
+          'pageSize':pageSize,
+          'actionId':actionId
+        }
+        obj = JSON.stringify(obj)
+        $.ajax({
+          type:"POST",
+          url:'story/findAllByActionId',
+          contentType: "application/json",
+          data: obj,
+          dataType: 'json',
+          success:function (data) {
+            console.log(data)
+          }
+        })
+      })
+
+      //我的故事
+      $('#myStory').click(function () {
+
+        // 查找阅读量最多的5个故事
+        var pageIndex = 1
+        var pageSize = 5
+        // 按作者用户名查询
+        var condition = document.getElementById("profile_username").innerText
+
+
+        var obj = {
+          'pageIndex':pageIndex,
+          'pageSize':pageSize,
+          'condition':condition
+        }
+        obj = JSON.stringify(obj)
+        $.ajax({
+          type:"POST",
+          url:'story/findByUsername',
+          contentType: "application/json",
+          data: obj,
+          dataType: 'json',
+          success:function (data) {
+            console.log(data)
+          }
+        })
       })
 
       //阅读全文

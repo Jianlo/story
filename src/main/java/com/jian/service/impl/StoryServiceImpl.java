@@ -47,9 +47,9 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public PageInfo<Story> findByUid(StoryConditionQueryDto storyConditionQueryDto) {
+    public PageInfo<Story> findByUsername(StoryConditionQueryDto storyConditionQueryDto) {
         PageHelper.startPage(storyConditionQueryDto.getPageIndex(),storyConditionQueryDto.getPageSize());
-        return new PageInfo<>(storyMapper.findByUid(storyConditionQueryDto.getCondition()));
+        return new PageInfo<>(storyMapper.findByUsername(storyConditionQueryDto.getCondition()));
     }
 
     @Override
