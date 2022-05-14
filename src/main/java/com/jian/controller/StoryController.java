@@ -10,6 +10,7 @@ import com.jian.entity.Story;
 import com.jian.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -89,7 +90,9 @@ public class StoryController {
 
     //根据作者用户名查询所有故事
     @PostMapping("/story/findByUsername")
-    public ResultData<PageInfo<Story>> findByUsername(@RequestBody StoryConditionQueryDto storyConditionQueryDto){
+    public ResultData<PageInfo<Story>> findByUsername(@RequestBody StoryConditionQueryDto storyConditionQueryDto,Model model){
+
+        //model.addAttribute("myStroyList")
         return ResultData.of(storyService.findByUsername(storyConditionQueryDto));
     }
 

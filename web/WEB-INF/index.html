@@ -132,6 +132,7 @@
                   </textarea>
                 </div>
 
+                <!--阅读量、评论量、点赞量-->
                 <div class="text-right">
                   <!--阅读量-->
                   <a href="##" class="card-link">
@@ -295,9 +296,10 @@
 
 
     <script>
+
       //把数据库中的markdown解析为html显示
       //循环解析ul中每个li里的markdown
-      $(function (){
+      function markdownToHtml() {
         var lis = document.getElementById('storyul').getElementsByClassName('storyli')
         for (var i=0;i<lis.length;i++){
 
@@ -315,10 +317,12 @@
           })
 
 
-
-
-
         }
+      }
+
+
+      $(function (){
+        markdownToHtml()
       })
 
       //热门故事
@@ -351,7 +355,7 @@
       //我的故事
       $('#myStory').click(function () {
 
-        // 查找阅读量最多的5个故事
+
         var pageIndex = 1
         var pageSize = 5
         // 按作者用户名查询
@@ -364,6 +368,8 @@
           'condition':condition
         }
         obj = JSON.stringify(obj)
+
+        //向后端发送ajax请求，查找该用户的所有故事
         $.ajax({
           type:"POST",
           url:'story/findByUsername',
@@ -371,10 +377,34 @@
           data: obj,
           dataType: 'json',
           success:function (data) {
-            console.log(data)
+            var myStoryList = data.data.list
+            console.log(myStoryList)
+
+            //动态生成我的故事列表
+            var html = ""
+            $.each(myStoryList,function (k, v) {
+              html += ' <li class="list-group-item bg-white storyli">\n' +
+                      '            <div class="card border-0">\n' +
+                      '              <div class="card-body">\n' +
+                      '                <div class="mb-3">\n' +
+                      '                  <img src="images/profile.jpg" height="50" width="50" style="border-radius: 50%;">\n' +
+                      '                  <p class="d-inline font-weight-bold">' + myStoryList[k].author + '</p>\n' +
+                      '                </div>\n' +
+                      '                <h6 class="card-title mb-2 ">' + myStoryList[k].title + '</h6>\n' +
+                      '\n' +
+                      '                <div id="doc-content" th:id="\'content\'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">\n' +
+                      '                  <textarea style="display: none">' + myStoryList[k].content + ' </textarea>\n' +
+                      '                </div>'+'</div></div></li>'
+
+            })
+
+            $("#storyul").html(html)
+
           }
         })
+
       })
+
 
       //阅读全文
       function show(e) {
