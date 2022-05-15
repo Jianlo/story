@@ -90,9 +90,7 @@ public class StoryController {
 
     //根据作者用户名查询所有故事
     @PostMapping("/story/findByUsername")
-    public ResultData<PageInfo<Story>> findByUsername(@RequestBody StoryConditionQueryDto storyConditionQueryDto,Model model){
-
-        //model.addAttribute("myStroyList")
+    public ResultData<PageInfo<Story>> findByUsername(@RequestBody StoryConditionQueryDto storyConditionQueryDto){
         return ResultData.of(storyService.findByUsername(storyConditionQueryDto));
     }
 
