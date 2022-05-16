@@ -121,11 +121,12 @@
             <div class="card border-0">
               <div class="card-body">
                 <div class="mb-3">
-                  <img src="images/profile.jpg" height="50" width="50" style="border-radius: 50%;">
-                  <p class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</p>
+<!--                  <img src="images/profile.jpg" height="50" width="50" style="border-radius: 50%;">-->
+                  <a id="a_profile" data-toggle="popover" href="##" class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</a>
                 </div>
-                <h6 class="card-title mb-2 " th:text="${story.title}">Card Title</h6>
-
+                <h6 class="card-title" th:text="${story.title}">Card Title
+                  <small class="card-subtitle ml-3 text-muted" th:text="${story.storyTag}">青春</small>
+                </h6>
                 <div id="doc-content" th:id="'content'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">
                   <textarea style="display: none" th:text="${story.content}">
                      Some quick example text to build on the card title and make up the bulk of the card's content.
@@ -143,15 +144,15 @@
                     <span class="text-muted" th:text="${story.readNum}">23</span>
                   </a>
                   <!--评论-->
-                  <a class="card-link" id="comment_icon" onclick="comment(this)" data-toggle="collapse" href="#collapseExample" th:href="@{'#collapse'+${story.id}}" th:label="${story.sid}" th:name="'collapse'+${story.id}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                  <a class="card-link" onclick="comment(this)" data-toggle="collapse" href="#collapseExample" th:href="@{'#collapse'+${story.id}}" th:label="${story.sid}" th:name="'collapse'+${story.id}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chat-dots-fill" viewBox="0 0 16 16" id="comment_icon">
                       <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                     </svg>
                     <span class="text-muted" th:text="${story.commentNum}">23</span>
                   </a>
                   <!--点赞-->
-                  <a href="##" class="card-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                  <a href="##" class="card-link" onclick="loveIt(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16" id="love_icon">
                       <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     <span class="text-muted" th:text="${story.loveNum}">23</span>
@@ -300,6 +301,7 @@
 
     <script>
 
+
       //把数据库中的markdown解析为html显示
       //循环解析ul中每个li里的markdown
       function markdownToHtml() {
@@ -323,10 +325,49 @@
         }
       }
 
-
+      //页面加载时将markdown解析为html
       $(function (){
         markdownToHtml()
       })
+
+
+      //当鼠标悬停在用户名上时，通过ajax查询用户个人信息并显示
+      $("[data-toggle='popover']").popover({
+        trigger: 'manual',
+        html: true,
+        title: '个人简介',
+        placement: 'right',
+        content: function() {
+
+          var username = this.innerText
+          $.ajax({
+            type:"GET",
+            url:"user/findByUsername",
+            data:"username="+ username,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType:'json',
+            success:function (data) {
+              console.log(data)
+            }
+
+          })
+          return '<div class="col-sm-1 text-center">'+ "content" +'</div>';//这里写悬浮的内容
+        }
+      }).on("mouseenter", function() {
+        var _this = this;
+        $(this).popover("show");
+        $(".popover").on("mouseleave", function() {
+          $(_this).popover('hide');
+        });
+      }).on("mouseleave", function() {
+        var _this = this;
+        setTimeout(function() {
+          if(!$(".popover:hover").length) {
+            $(_this).popover("hide")
+          }
+        }, 100);
+      });
+
 
       //热门故事
       $('#hotStory').click(function () {
@@ -409,10 +450,19 @@
       })
 
 
+
       //加载评论
       function comment(e) {
 
-        document.getElementById('comment_icon').setAttribute("style","fill:green")
+        var icon_color = e.firstElementChild
+        console.log(icon_color)
+        if (icon_color.style.fill=="black"){
+          icon_color.style.fill="gray"
+        }
+        else {
+          icon_color.style.fill="black"
+        }
+
 
         //获取故事的sid
         var sid = e.getAttribute("label")
@@ -450,6 +500,17 @@
 
           }
         })
+      }
+
+      //点赞
+      function loveIt(e){
+        var icon_color = e.firstElementChild
+        if (icon_color.style.fill=="black"){
+          icon_color.style.fill="gray"
+        }
+        else {
+          icon_color.style.fill="black"
+        }
       }
 
 

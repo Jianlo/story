@@ -145,6 +145,7 @@ public class UserController {
     }
 
     //按用户名查询用户
+    @ResponseBody
     @GetMapping("/user/findByUsername")
     public ResultData<User> findByUsername(@RequestParam String username){
         return ResultData.of(userService.findByUsername(username));
