@@ -121,8 +121,8 @@
             <div class="card border-0">
               <div class="card-body">
                 <div class="mb-3">
-<!--                  <img src="images/profile.jpg" height="50" width="50" style="border-radius: 50%;">-->
-                  <a id="a_profile" data-toggle="popover" href="##" class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</a>
+                  <a id="a_profile" data-toggle="popover" href="##" class="font-weight-bold" style="text-decoration-line: none" th:text="${story.author}">且听龙吟</a>
+                  <a class="subscribe btn btn-sm btn-outline-dark mb-2 ml-1" th:name="${story.author}" th:if="${story.author} != ${session.user.username}">关注</a>
                 </div>
                 <h6 class="card-title" th:text="${story.title}">Card Title
                   <small class="card-subtitle ml-3 text-muted" th:text="${story.storyTag}">青春</small>
@@ -211,7 +211,7 @@
         <div class="bg-white" >
           <!--头像-->
           <div class="text-center mb-3">
-            <img src="images/profile.jpg" th:src="${session.user.photoUrl}" class="profileImg mt-lg-5">
+            <img src="images/profile.jpg" th:src="${session.user.photoUrl}" class="profileImg mt-lg-5" style="border-radius: 2px">
           </div>
           <!--用户名-->
           <p class="font-weight-bold text-dark text-center" id="profile_username" th:text="${session.user.username}">且听龙吟</p>
@@ -265,7 +265,6 @@
               <li class="list-group-item" th:each="subscribe:${subscribeList}">
                 <div class="row mb-2">
                   <div class="col">
-                    <img src=".." height="30px" width="30px">
                     <p class="d-inline" th:text="${subscribe.member}">路人甲</p>
                   </div>
                 </div>
@@ -335,23 +334,12 @@
       $("[data-toggle='popover']").popover({
         trigger: 'manual',
         html: true,
-        title: '个人简介',
-        placement: 'right',
+        title: '',
+        placement: 'left',
         content: function() {
 
-          var username = this.innerText
-          $.ajax({
-            type:"GET",
-            url:"user/findByUsername",
-            data:"username="+ username,
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType:'json',
-            success:function (data) {
-              console.log(data)
-            }
+          return content(this)
 
-          })
-          return '<div class="col-sm-1 text-center">'+ "content" +'</div>';//这里写悬浮的内容
         }
       }).on("mouseenter", function() {
         var _this = this;
@@ -367,6 +355,122 @@
           }
         }, 100);
       });
+
+
+      function content(e) {
+
+        var username = e.innerText
+        var uid = ""
+        var photoUrl = ""
+        var email = ""
+
+        //查询作者个人信息
+        $.ajax({
+          async:false,         //关闭ajax异步功能
+          type:"GET",
+          url:"user/findByUsername",
+          data:"username="+ username,
+          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+          dataType:'json',
+          success:function (data) {
+
+            // console.log(data)
+            // console.log(data.data)
+           uid = data.data.uid
+           photoUrl = data.data.photoUrl
+           email = data.data.email
+
+          }
+        })
+
+        //查看用户是否已经关注此作者
+        var a_subscribe = ""
+        var owner = document.getElementById('profile_username').innerText
+        var member = username
+
+        var obj = {
+          "owner":owner,
+          "member":member
+        }
+
+        obj = JSON.stringify(obj)
+        $.ajax({
+          async:false,         //关闭ajax异步功能
+          type:"POST",
+          url:"subscribe/findByMember",
+          contentType:"application/json",
+          data:obj,
+          dataType:'json',
+          success:function (data) {
+
+            console.log(data)
+            console.log(data.data)
+            if (data.data != null){
+              a_subscribe = ' <a class="btn btn-sm btn-block btn-outline-dark mb-2" onclick="cancel(this)" name="' + username + '">取消关注</a>'
+            }
+            else{
+              if (owner === member){
+                a_subscribe = ""
+              }
+              else{
+                a_subscribe = '<a class="btn btn-sm btn-block btn-outline-dark mb-2" onclick="subscribe(this)" name="' + username + '">关注</a>'
+              }
+            }
+
+          }
+        })
+
+        var content = $('<div class="col">\n' +
+                '                    <!--头像-->\n' +
+                '                   <div class="text-center">\n' +
+                '                     <img src="' + photoUrl + '"class="mt-lg-2 profileImg">\n' +
+                '                   </div>\n' +
+                '                    <!--用户名-->\n' +
+                '                   <p class="font-weight-bold text-dark text-center" id="profile_username">' + username + '</p>\n' +
+                '                    <!--用户信息-->\n' +
+                '                   <ul class="list-group list-group-flush mb-3" style="background-color: #343a40;color: white" >\n' +
+                '                    <li class="list-group-item list-group-item-light">\n' +
+                '                     uid：\n' + uid +
+                '                    </li>\n' +
+                '                    <li class="list-group-item list-group-item-light">\n' +
+                '                      邮箱：\n' + email +
+                '                   </li>\n' +
+                '                  </ul>\n' + a_subscribe +
+                '              </div>')
+
+        return content
+
+      }
+
+
+      //关注作者
+      function subscribe(e) {
+
+        var owner = document.getElementById('profile_username').innerText
+        var member = e.name
+        var obj = {
+          "owner":owner,
+          "member":member
+        }
+        obj = JSON.stringify(obj)
+        $.ajax({
+          type:"POST",
+          url:"subscribe/add",
+          contentType: "application/json",
+          data:obj,
+          dataType:'json',
+          success:function (data) {
+            console.log(data)
+          }
+        })
+      }
+
+      //取消关注
+      function cancel(e) {
+        console.log("dddddd")
+      }
+
+
 
 
       //热门故事

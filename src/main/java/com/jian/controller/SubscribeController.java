@@ -20,7 +20,7 @@ public class SubscribeController {
 
     //添加关注
     @PostMapping("/subscribe/add")
-    public ResultData<Void> add(@RequestBody SubscribeDto subscribeDto){
+    public ResultData<List<Subscribe>> add(@RequestBody SubscribeDto subscribeDto){
 
         //新建关注记录
         Subscribe subscribe = new Subscribe();
@@ -29,8 +29,9 @@ public class SubscribeController {
         subscribe.setSubscribeTime(new Date());
 
         subscribeService.add(subscribe);
+        List<Subscribe> subscribeList = subscribeService.findAll(subscribeDto.getOwner());
 
-        return ResultData.of(StatusCode.SUCCESS.getCode(), "关注成功");
+        return ResultData.of(subscribeList);
     }
 
     //取消关注

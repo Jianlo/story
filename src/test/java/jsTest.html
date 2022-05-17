@@ -3,44 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
-    <!-- jquery-->
+    <link href="bootstrap.min.css" rel="stylesheet"/>
     <script src="jquery.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
 
-    <style>
-        p{
-            width:300px;
-            height:100px;
-            text-indent:2em;
-            line-height:150%;
-            margin:5px 0 0;
-        }
-        p a{
-            color:#FDCD3D;
-        }
-    </style>
 </head>
 <body>
-    <p>这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文这是一个P标签，点击展开查看全文</p>
-
-    <script type="text/javascript">
-        $(function(){
-            $("p").each(function(){
-                var maxwidth=60;//设置最多显示的字数
-                var text=$(this).text();
-                if($(this).text().length>maxwidth){
-                    $(this).text($(this).text().substring(0,maxwidth));
-                    $(this).html($(this).html()+"..."+"<a href='###'> 点击展开</a>");//如果字数超过最大字数，超出部分用...代替，并且在后面加上点击展开的链接；
-
-                };
-                $(this).find("a").click(function(){
-                    $(this).parent().text(text);//点击“点击展开”，展开全文
-                })
-            })
-        })
-    </script>
-
+<a href="#" class="bind_hover_card" data-toggle="popover" data-placement="bottom" data-trigger="hover">
+    哈哈哈
+</a>
 </body>
 
+<script>
+
+
+
+        $("[data-toggle='popover']").popover({
+
+            html : true,
+
+            title: title(),
+
+            delay:{show:500, hide:1000},
+
+            content: function() {
+
+                return content();
+
+            }
+
+        });
+
+
+    //模拟动态加载标题(真实情况可能会跟后台进行ajax交互)
+
+    function title() {
+
+        return '田喜碧Hebe(节制的人生)';
+
+    }
+
+
+
+    //模拟动态加载内容(真实情况可能会跟后台进行ajax交互)
+
+    function content() {
+
+        var data = $("<form><ul><li><span aria-hidden='true' class='icon_globe'></span>&nbsp;<font>粉丝数:</font>7389223</li>" +
+
+            "<li><span aria-hidden='true' class='icon_piechart'></span>&nbsp;<font>关注:</font>265</li>" +
+
+            "<li><span aria-hidden='true' class='icon_search_alt'></span>&nbsp;<font>微博:</font>645</li>" +
+
+            "<li><span aria-hidden='true' class='icon_pens_alt'></span>&nbsp;<font>所在地:</font>台湾</li>" +
+
+            "<input id='btn' type='button' value='关注' onclick='test()'/></form>");
+
+
+
+        return data;
+
+    }
+
+    //模拟悬浮框里面的按钮点击操作
+
+    function test() {
+
+        alert('关注成功');
+
+    }
+
+</script>
 
 </html>
