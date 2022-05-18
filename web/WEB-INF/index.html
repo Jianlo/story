@@ -122,7 +122,6 @@
               <div class="card-body">
                 <div class="mb-3">
                   <a id="a_profile" data-toggle="popover" href="##" class="font-weight-bold" style="text-decoration-line: none" th:text="${story.author}">且听龙吟</a>
-                  <a class="subscribe btn btn-sm btn-outline-dark mb-2 ml-1" th:name="${story.author}" th:if="${story.author} != ${session.user.username}">关注</a>
                 </div>
                 <h6 class="card-title" th:text="${story.title}">Card Title
                   <small class="card-subtitle ml-3 text-muted" th:text="${story.storyTag}">青春</small>
@@ -182,8 +181,7 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="mb-3">
-                        <img src="..">
-                        <p class="d-inline font-weight-bold" th:text="${story.author}">且听龙吟</p>
+                        <a class="d-inline font-weight-bold" data-toggle="popover" th:text="${story.author}">且听龙吟</a>
                       </div>
                       <div class="card-text">TypeScript 是由微软开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程。</div>
                       <p class="card-text mt-2"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -261,11 +259,11 @@
               </a>
             </div>
 
-            <ul class="list-group list-group-flush mt-3" style="height: 350px;overflow: auto">
+            <ul  id="subscribeul" class="list-group list-group-flush mt-3" style="height: 350px;overflow: auto">
               <li class="list-group-item" th:each="subscribe:${subscribeList}">
                 <div class="row mb-2">
                   <div class="col">
-                    <p class="d-inline" th:text="${subscribe.member}">路人甲</p>
+                    <a data-toggle="popover" style="text-decoration-line: none" class="" th:text="${subscribe.member}">路人甲</a>
                   </div>
                 </div>
 
@@ -276,7 +274,7 @@
                       <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                     </svg>
                   </a>
-                  <a class="card-link">
+                  <a label="cancel" class="card-link" onclick="subOrCancel(this)" th:name="${subscribe.member}">
                     取消关注
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                       <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
@@ -324,37 +322,44 @@
         }
       }
 
-      //页面加载时将markdown解析为html
+      //页面加载时
       $(function (){
+        //页面加载时将markdown解析为html
         markdownToHtml()
+        //为特定元素配置悬浮窗口
+        profileShow()
       })
 
 
+
       //当鼠标悬停在用户名上时，通过ajax查询用户个人信息并显示
-      $("[data-toggle='popover']").popover({
-        trigger: 'manual',
-        html: true,
-        title: '',
-        placement: 'left',
-        content: function() {
+     function profileShow() {
+       $("[data-toggle='popover']").popover({
+         trigger: 'manual',
+         html: true,
+         title: '',
+         placement: 'left',
+         content: function() {
 
-          return content(this)
+           return content(this)
 
-        }
-      }).on("mouseenter", function() {
-        var _this = this;
-        $(this).popover("show");
-        $(".popover").on("mouseleave", function() {
-          $(_this).popover('hide');
-        });
-      }).on("mouseleave", function() {
-        var _this = this;
-        setTimeout(function() {
-          if(!$(".popover:hover").length) {
-            $(_this).popover("hide")
-          }
-        }, 100);
-      });
+         }
+       }).on("mouseenter", function() {
+         var _this = this;
+         $(this).popover("show");
+         $(".popover").on("mouseleave", function() {
+           $(_this).popover('hide');
+         });
+       }).on("mouseleave", function() {
+         var _this = this;
+         setTimeout(function() {
+           if(!$(".popover:hover").length) {
+             $(_this).popover("hide")
+           }
+         }, 100);
+       });
+
+     }
 
 
       function content(e) {
@@ -406,14 +411,14 @@
             console.log(data)
             console.log(data.data)
             if (data.data != null){
-              a_subscribe = ' <a class="btn btn-sm btn-block btn-outline-dark mb-2" onclick="cancel(this)" name="' + username + '">取消关注</a>'
+              a_subscribe = ' <a label="cancel" class="btn btn-sm btn-block btn-outline-dark mb-2" onclick="subOrCancel(this)" name="' + username + '">取消关注</a>'
             }
             else{
               if (owner === member){
                 a_subscribe = ""
               }
               else{
-                a_subscribe = '<a class="btn btn-sm btn-block btn-outline-dark mb-2" onclick="subscribe(this)" name="' + username + '">关注</a>'
+                a_subscribe = '<a label="subscribe" class="btn btn-sm btn-block btn-outline-dark mb-2" onclick="subOrCancel(this)" name="' + username + '">关注</a>'
               }
             }
 
@@ -443,11 +448,13 @@
       }
 
 
-      //关注作者
-      function subscribe(e) {
+      //关注作者或取消关注
+      function subOrCancel(e) {
 
+        console.log("ceshi")
         var owner = document.getElementById('profile_username').innerText
         var member = e.name
+        var url = e.getAttribute("label") === "subscribe"?"subscribe/add":"subscribe/delete"
         var obj = {
           "owner":owner,
           "member":member
@@ -455,21 +462,46 @@
         obj = JSON.stringify(obj)
         $.ajax({
           type:"POST",
-          url:"subscribe/add",
+          url:url,
           contentType: "application/json",
           data:obj,
           dataType:'json',
           success:function (data) {
             console.log(data)
+            var subscribeList = data.data
+            var html = ""
+            $.each(subscribeList,function (k, v) {
+              html += ' <li class="list-group-item">\n' +
+                      '                <div class="row mb-2">\n' +
+                      '                  <div class="col">\n' +
+                      '                    <a href="##" data-toggle="popover" style="text-decoration-line: none" class="d-inline">' + subscribeList[k].member + '</a>\n' +
+                      '                  </div>\n' +
+                      '                </div>\n' +
+                      '\n' +
+                      '                <div class="text-right">\n' +
+                      '                  <a class="card-link">\n' +
+                      '                    私信\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">\n' +
+                      '                      <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>\n' +
+                      '                    </svg>\n' +
+                      '                  </a>\n' +
+                      '                  <a label="cancel" class="card-link" onclick="subOrCancel(this)" name="' + subscribeList[k].member + '">\n' +
+                      '                    取消关注\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">\n' +
+                      '                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>\n' +
+                      '                    </svg>\n' +
+                      '                  </a>\n' +
+                      '                </div>\n' +
+                      '              </li>'
+            })
+
+            $("#subscribeul").html(html)
+
+            //为新生成的元素配置悬浮窗口
+            profileShow()
           }
         })
       }
-
-      //取消关注
-      function cancel(e) {
-        console.log("dddddd")
-      }
-
 
 
 
@@ -589,8 +621,7 @@
                       '                  <div class="card">\n' +
                       '                    <div class="card-body">\n' +
                       '                      <div class="mb-3">\n' +
-                      '                        <img src="..">\n' +
-                      '                        <p class="d-inline font-weight-bold">' + commentList[k].commenter + '</p>\n' +
+                      '                        <a href="##" class="d-inline font-weight-bold" data-toggle="popover">' + commentList[k].commenter + '</a>\n' +
                       '                      </div>\n' +
                       '                      <div class="card-text">' + commentList[k].commentContent + '</div>\n' +
                       '                      <p class="card-text mt-2"><small class="text-muted">' + commentList[k].commentTime + '</small></p>\n' +
@@ -601,6 +632,9 @@
 
             var comment_panel = e.getAttribute("name")
             document.getElementById(comment_panel).firstElementChild.innerHTML = html
+
+            //为新生成的元素配置悬浮窗口
+            profileShow()
 
           }
         })

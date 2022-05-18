@@ -36,10 +36,11 @@ public class SubscribeController {
 
     //取消关注
     @PostMapping("/subscribe/delete")
-    public ResultData<Void> delete(@RequestBody SubscribeDto subscribeDto){
+    public ResultData<List<Subscribe>> delete(@RequestBody SubscribeDto subscribeDto){
 
         subscribeService.delete(subscribeDto);
-        return ResultData.of(StatusCode.SUCCESS.getCode(), "已取消关注");
+        List<Subscribe> subscribeList = subscribeService.findAll(subscribeDto.getOwner());
+        return ResultData.of(subscribeList);
     }
 
     //查询所有关注
