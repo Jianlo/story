@@ -26,7 +26,7 @@ public class CommentController {
 
     //添加一条评论
     @PostMapping("/comment/addComment")
-    public ResultData<Void> addComment(@RequestBody CommentDto commentDto){
+    public ResultData<List<Comment>> addComment(@RequestBody CommentDto commentDto){
 
         Comment comment = new Comment();
         //生成评论编号
@@ -43,8 +43,9 @@ public class CommentController {
         story.setCommentNum(story.getCommentNum()+1);
         storyService.updateStory(story);
 
+        List<Comment> commentList = commentService.findAll(commentDto.getSid());
 
-        return ResultData.of(StatusCode.SUCCESS.getCode(), "评论成功");
+        return ResultData.of(commentList);
 
     }
 

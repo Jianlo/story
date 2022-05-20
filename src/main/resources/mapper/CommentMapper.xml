@@ -23,6 +23,6 @@
     </select>
 
     <select id="findAll" resultType="com.jian.entity.Comment">
-        select * from story.comment where sid=#{sid}
+        select * from story.comment where sid=#{sid} order by commentTime
     </select>
 </mapper>
