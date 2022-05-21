@@ -85,6 +85,7 @@ public class CommentController {
     //查询所有评论
     @GetMapping("/comment/findBySid")
     public ResultData<List<Comment>> findBySid(@RequestParam String sid){
-        return ResultData.of(commentService.findAll(sid));
+        List<Comment> commentList = commentService.findAll(sid);
+        return ResultData.of(commentList);
     }
 }

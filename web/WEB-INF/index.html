@@ -105,13 +105,13 @@
         <!-- 导航条-->
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link active" href="##">推荐</a>
+            <a class="nav-link active" onclick="storyPart(this)" label="1" href="##">推荐</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="hotStory" href="##">热门</a>
+            <a class="nav-link" onclick="storyPart(this)" label="2" id="hotStory" href="##">热门</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="myStory" href="##">我的</a>
+            <a class="nav-link" onclick="storyPart(this)" label="3" id="myStory" href="##">我的</a>
           </li>
         </ul>
 
@@ -123,9 +123,8 @@
                 <div class="mb-3">
                   <a id="a_profile" data-toggle="popover" href="##" class="font-weight-bold" style="text-decoration-line: none" th:text="${story.author}">且听龙吟</a>
                 </div>
-                <h6 class="card-title" th:text="${story.title}">Card Title
-                  <small class="card-subtitle ml-3 text-muted" th:text="${story.storyTag}">青春</small>
-                </h6>
+                <h6 class="card-title" th:text="${story.title}">Card Title</h6>
+                <small class="card-subtitle ml-3 text-muted" th:text="${story.storyTag}">青春</small>
                 <div id="doc-content" th:id="'content'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">
                   <textarea style="display: none" th:text="${story.content}">
                      Some quick example text to build on the card title and make up the bulk of the card's content.
@@ -136,7 +135,7 @@
                 <div class="text-right">
                   <!--阅读量-->
                   <a href="##" class="card-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-eye-fill" viewBox="0 0 16 16">
                       <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                       <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                     </svg>
@@ -169,19 +168,18 @@
                     </svg>
                   </a>
                 </div>
-
               </div>
             </div>
 
             <!-- 评论板块-->
             <div class="collapse pre-scrollable fade mt-3" id="collapseExample" th:id="'collapse'+${story.id}">
-              <ul class="list-group" id="commentul">
+              <ul class="list-group">
                 <!--评论内容-->
                 <li class="list-group-item">
                   <div class="card">
                     <div class="card-body">
                       <div class="mb-3">
-                        <a class="d-inline font-weight-bold" data-toggle="popover" th:text="${story.author}">且听龙吟</a>
+                        <a class="d-inline font-weight-bold" data-toggle="popover">且听龙吟</a>
                       </div>
                       <div class="card-text">TypeScript 是由微软开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程。</div>
                       <p class="card-text mt-2"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -303,6 +301,8 @@
       //循环解析ul中每个li里的markdown
       function markdownToHtml() {
         var lis = document.getElementById('storyul').getElementsByClassName('storyli')
+        console.log("这个测试----------------------")
+        console.log(lis)
         for (var i=0;i<lis.length;i++){
 
           var id = lis[i].getElementsByClassName('getid')[0].getAttribute("id")
@@ -320,6 +320,18 @@
 
 
         }
+      }
+
+      //将时间戳转换成时间格式
+      function timestampToTime(timestamp) {
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        return Y+M+D+h+m+s;
       }
 
       //页面加载时
@@ -510,55 +522,50 @@
       }
 
 
+      //故事标签页
+      function storyPart(e) {
 
-      //热门故事
-      $('#hotStory').click(function () {
-
-        // 查找阅读量最多的5个故事
+        //第几页
         var pageIndex = 1
+        //页大小
         var pageSize = 5
-        // 按阅读量查询
-        var actionId = 1
-
-        var obj = {
-          'pageIndex':pageIndex,
-          'pageSize':pageSize,
-          'actionId':actionId
-        }
-        obj = JSON.stringify(obj)
-        $.ajax({
-          type:"POST",
-          url:'story/findAllByActionId',
-          contentType: "application/json",
-          data: obj,
-          dataType: 'json',
-          success:function (data) {
-            console.log(data)
-          }
-        })
-      })
-
-      //我的故事
-      $('#myStory').click(function () {
-
-
-        var pageIndex = 1
-        var pageSize = 5
-        // 按作者用户名查询
+        // 作者用户名
         var condition = document.getElementById("profile_username").innerText
-
-
-        var obj = {
-          'pageIndex':pageIndex,
-          'pageSize':pageSize,
-          'condition':condition
+        var obj ={}
+        var url = ""
+        var choose = e.getAttribute("label")
+        if (choose === "1"){
+          obj = {
+            'pageIndex':pageIndex,
+            'pageSize':pageSize,
+            'actionId':choose
+          }
+          url = "story/findAllByActionId"
         }
+        if (choose === "2"){
+          obj = {
+            'pageIndex':pageIndex,
+            'pageSize':pageSize,
+            'actionId':choose
+          }
+          url = "story/findAllByActionId"
+        }
+        if (choose === "3"){
+          obj = {
+            'pageIndex':pageIndex,
+            'pageSize':pageSize,
+            'condition':condition
+          }
+          url = "story/findByUsername"
+        }
+
+
         obj = JSON.stringify(obj)
 
         //向后端发送ajax请求，查找该用户的所有故事
         $.ajax({
           type:"POST",
-          url:'story/findByUsername',
+          url:url,
           contentType: "application/json",
           data: obj,
           dataType: 'json',
@@ -569,27 +576,82 @@
             //动态生成我的故事列表
             var html = ""
             $.each(myStoryList,function (k, v) {
-              html += ' <li class="list-group-item bg-white storyli">\n' +
+              html += '<li class="list-group-item bg-white storyli">\n' +
                       '            <div class="card border-0">\n' +
                       '              <div class="card-body">\n' +
                       '                <div class="mb-3">\n' +
-                      '                  <img src="images/profile.jpg" height="50" width="50" style="border-radius: 50%;">\n' +
-                      '                  <p class="d-inline font-weight-bold">' + myStoryList[k].author + '</p>\n' +
+                      '                  <a id="a_profile" data-toggle="popover" href="##" class="font-weight-bold" style="text-decoration-line: none"">' + myStoryList[k].author + '</a>\n' +
                       '                </div>\n' +
-                      '                <h6 class="card-title mb-2 ">' + myStoryList[k].title + '</h6>\n' +
-                      '\n' +
-                      '                <div id="doc-content" th:id="\'content\'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">\n' +
-                      '                  <textarea style="display: none">' + myStoryList[k].content + ' </textarea>\n' +
-                      '                </div>'+'</div></div></li>'
+                      '                <h6 class="card-title">' + myStoryList[k].title + '</h6>\n' +
+                      '                <small class="card-subtitle ml-3 text-muted">' + myStoryList[k].storyTag + '</small>\n' +
+                      '                <div id="doc-content" id="content' + myStoryList[k].id +'"' + ' class="card-text getid" style="height:100px;overflow-y:hidden;">\n' +
+                      '                  <textarea style="display: none">' + myStoryList[k].content + '  </textarea>\n' +
+                      '                </div>\n' +
+                      '                <!--阅读量、评论量、点赞量-->\n' +
+                      '                <div class="text-right">\n' +
+                      '                  <!--阅读量-->\n' +
+                      '                  <a href="##" class="card-link">\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-eye-fill" viewBox="0 0 16 16">\n' +
+                      '                      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>\n' +
+                      '                      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>\n' +
+                      '                    </svg>\n' +
+                      '                    <span class="text-muted" id="read'+ myStoryList[k].id + '">' + myStoryList[k].readNum + '</span>\n' +
+                      '                  </a>\n' +
+                      '                  <!--评论-->\n' +
+                      '                  <a class="card-link" onclick="comment(this)" data-toggle="collapse" href="#collapse' + myStoryList[k].id + '" ' + 'label="' + myStoryList[k].id + '" ' + 'name="collapse' + myStoryList[k].id + '">\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chat-dots-fill" viewBox="0 0 16 16" id="comment_icon">\n' +
+                      '                      <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>\n' +
+                      '                    </svg>\n' +
+                      '                    <span class="text-muted" id="comment'+ myStoryList[k].id + '">' + myStoryList[k].commentNum + '</span>\n' +
+                      '                  </a>\n' +
+                      '                  <!--点赞-->\n' +
+                      '                  <a href="##" class="card-link" onclick="loveIt(this)">\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16" id="love_icon">\n' +
+                      '                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>\n' +
+                      '                    </svg>\n' +
+                      '                    <span class="text-muted" text="' + myStoryList[k].loveNum + '">' + '</span>\n' +
+                      '                  </a>\n' +
+                      '                  <a href="##" class="card-link mt-2" id="show" onclick="show(this)" th:label="' + myStoryList[k].id + '" aria-label="read' + myStoryList[k].id + '" style="display:block">' + '<span>阅读全文</span>\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">\n' +
+                      '                      <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>\n' +
+                      '                    </svg>\n' +
+                      '                  </a>\n' +
+                      '                  <a href="##" class="card-link mt-2" id="hidden" onclick="shou(this)"  style="display:none">\n' +
+                      '                    <span>收起</span>\n' +
+                      '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">\n' +
+                      '                      <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>\n' +
+                      '                    </svg>\n' +
+                      '                  </a>\n' +
+                      '                </div>\n' +
+                      '              </div>\n' +
+                      '            </div>' +
+                      '            <!-- 评论板块-->\n' +
+                      '            <div class="collapse pre-scrollable fade mt-3" id="collapse' + myStoryList[k].id + '">' +
+                      '               <ul class="list-group"></ul>' +
+                      '               <form class="form-inline my-2 form-group">\n' +
+                      '                <input class="form-control mr-sm-2 col-10" type="search" placeholder="评论..." aria-label="Search">\n' +
+                      '                <a href="##" class="btn my-sm-0 col-1" onclick="pinglun(this)" label="' + myStoryList[k].id + '" ' + 'name="collapse' + myStoryList[k].id + '" aria-label="comment' + myStoryList[k].id + '">' +
+                      '                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">\n' +
+                      '                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>\n' +
+                      '                  </svg>\n' +
+                      '                </a>\n' +
+                      '              </form>\n' +
+                      '            </div>\n' +
+                      '</li>'
 
             })
 
             $("#storyul").html(html)
 
+            //将markdown解析为html
+            markdownToHtml()
+            //为新生成的元素配置悬浮窗口
+            profileShow()
+
+
           }
         })
-
-      })
+      }
 
 
 
@@ -630,13 +692,14 @@
                       '                        <a href="##" class="d-inline font-weight-bold" data-toggle="popover">' + commentList[k].commenter + '</a>\n' +
                       '                      </div>\n' +
                       '                      <div class="card-text">' + commentList[k].commentContent + '</div>\n' +
-                      '                      <p class="card-text mt-2"><small class="text-muted">' + commentList[k].commentTime + '</small></p>\n' +
+                      '                      <p class="card-text mt-2"><small class="text-muted">' + timestampToTime(commentList[k].commentTime) + '</small></p>\n' +
                       '                    </div>\n' +
                       '                  </div>\n' +
                       '                </li>'
             })
 
             var comment_panel = e.getAttribute("name")
+            console.log(comment_panel)
             document.getElementById(comment_panel).firstElementChild.innerHTML = html
 
             //为新生成的元素配置悬浮窗口
