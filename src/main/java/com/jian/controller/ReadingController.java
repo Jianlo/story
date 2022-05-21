@@ -23,7 +23,7 @@ public class ReadingController {
 
     //阅读故事
     @PostMapping("/read/readStory")
-    public ResultData<Void> readStory(@RequestBody ReadingDto readingDto){
+    public ResultData<Story> readStory(@RequestBody ReadingDto readingDto){
 
         Reading reading = readingService.findBySidAndReader(readingDto);
         //查找阅读记录是否存在
@@ -43,14 +43,14 @@ public class ReadingController {
             new_reading.setReadTime(new Date());
 
             readingService.add(new_reading);
+
+            //故事的阅读量加1
+            Story story = storyService.findBySid(readingDto.getSid());
+            story.setReadNum(story.getReadNum()+1);
+            storyService.updateStory(story);
         }
 
-        //故事的阅读量加1
-        Story story = storyService.findBySid(readingDto.getSid());
-        story.setReadNum(story.getReadNum()+1);
-        storyService.updateStory(story);
-
-        return ResultData.of();
+        return ResultData.of(storyService.findBySid(readingDto.getSid()));
     }
 
     @GetMapping("/read/deleteByReadId")
@@ -74,5 +74,10 @@ public class ReadingController {
         return ResultData.of();
     }
 
-
+    @PostMapping("/read/findBySidAndReader")
+    //查询用户指定的阅读记录
+    public ResultData<Reading> findBySidAndReader(@RequestBody ReadingDto readingDto){
+        Reading reading = readingService.findBySidAndReader(readingDto);
+        return ResultData.of(reading);
+    }
 }

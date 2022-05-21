@@ -48,4 +48,6 @@ public interface ReadingService {
      * @return Reading
      */
     Reading findBySidAndReader(ReadingDto readingDto);
+
+
 }

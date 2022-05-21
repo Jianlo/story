@@ -140,23 +140,23 @@
                       <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                       <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                     </svg>
-                    <span class="text-muted" th:text="${story.readNum}">23</span>
+                    <span class="text-muted" th:text="${story.readNum}" th:id="'read'+${story.id}">23</span>
                   </a>
                   <!--评论-->
                   <a class="card-link" onclick="comment(this)" data-toggle="collapse" href="#collapseExample" th:href="@{'#collapse'+${story.id}}" th:label="${story.sid}" th:name="'collapse'+${story.id}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chat-dots-fill" viewBox="0 0 16 16" id="comment_icon">
                       <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                     </svg>
-                    <span class="text-muted" th:text="${story.commentNum}">23</span>
+                    <span class="text-muted" th:text="${story.commentNum}" th:id="'comment'+${story.id}">23</span>
                   </a>
                   <!--点赞-->
                   <a href="##" class="card-link" onclick="loveIt(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-heart-fill" viewBox="0 0 16 16" id="love_icon">
                       <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
-                    <span class="text-muted" th:text="${story.loveNum}">23</span>
+                    <span class="text-muted" th:text="${story.loveNum}">0</span>
                   </a>
-                  <a href="##" class="card-link mt-2" id="show" onclick="show(this)"  style="display:block">
+                  <a href="##" class="card-link mt-2" id="show" onclick="show(this)" th:label="${story.sid}" th:aria-label="'read'+${story.id}"  style="display:block">
                     <span>阅读全文</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
@@ -192,7 +192,7 @@
               <!--评论框-->
               <form class="form-inline my-2 form-group">
                 <input class="form-control mr-sm-2 col-10" type="search" placeholder="评论..." aria-label="Search">
-                <a href="##" class="btn my-sm-0 col-1" onclick="pinglun(this)" th:label="${story.sid}" th:name="'collapse'+${story.id}">
+                <a href="##" class="btn my-sm-0 col-1" onclick="pinglun(this)" th:label="${story.sid}" th:name="'collapse'+${story.id}" th:aria-label="'comment'+${story.id}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                     <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                   </svg>
@@ -245,17 +245,17 @@
             </nav>
 
             <div class="p-3">
-              <a href="#" class="card-link">
+              <a href="##" class="card-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
                   <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
                 </svg>
-                23
+                <span class="text-muted" id="subNum" th:text="${subscribeList.size()}">23</span>
               </a>
-              <a href="#" class="card-link">
+              <a href="##" class="card-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
                   <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
                 </svg>
-                12
+                <span class="text-muted">0</span>
               </a>
             </div>
 
@@ -451,7 +451,6 @@
       //关注作者或取消关注
       function subOrCancel(e) {
 
-        console.log("ceshi")
         var owner = document.getElementById('profile_username').innerText
         var member = e.name
         var url = e.getAttribute("label") === "subscribe"?"subscribe/add":"subscribe/delete"
@@ -467,7 +466,8 @@
           data:obj,
           dataType:'json',
           success:function (data) {
-            console.log(data)
+            // console.log(data)
+
             var subscribeList = data.data
             var html = ""
             $.each(subscribeList,function (k, v) {
@@ -499,6 +499,12 @@
 
             //为新生成的元素配置悬浮窗口
             profileShow()
+
+            //更新用户的关注数量
+            var subNum = data.data.length
+            console.log(subNum)
+            document.getElementById("subNum").innerText = subNum
+
           }
         })
       }
@@ -671,8 +677,14 @@
           dataType:"json",
           success:function (data) {
            // console.log(data)
-
             var commentList = data.data
+
+            //显示的评论量加1
+            var id = e.getAttribute("aria-label")
+            console.log(id)
+            var commentNum = document.getElementById(id)
+            console.log(commentNum)
+            commentNum.innerText = Number(commentNum.innerText) + 1
 
             //动态生成评论板块
             var html = ""
@@ -721,6 +733,35 @@
         e.nextElementSibling.style.display="block"
         var par = e.parentNode
         par.previousElementSibling.style.height="100%"
+
+        //故事sid
+        var sid = e.getAttribute("label")
+        //读者
+        var reader = document.getElementById("profile_username").innerText
+
+        var obj={
+          "sid":sid,
+          "reader":reader
+        }
+        obj = JSON.stringify(obj)
+
+        $.ajax({
+          type:"POST",
+          url:"read/readStory",
+          contentType:"application/json",
+          data:obj,
+          dataType:"json",
+          success:function (data) {
+            // console.log(data)
+            // console.log(data.data)
+
+            //更新显示的评论量
+            var id = e.getAttribute("aria-label")
+            console.log(id)
+            document.getElementById(id).innerText = data.data.readNum
+          }
+        })
+
       }
 
       //收起
