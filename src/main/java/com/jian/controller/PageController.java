@@ -33,6 +33,13 @@ public class PageController {
         return "signIn";
     }
 
+    //退出
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "signIn";
+    }
+
     //注册界面
     @RequestMapping("/register")
     public String register(){
