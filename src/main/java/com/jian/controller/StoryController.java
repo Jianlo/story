@@ -8,6 +8,7 @@ import com.jian.dto.StoryDto;
 import com.jian.dto.StoryPageDto;
 import com.jian.entity.Story;
 import com.jian.service.StoryService;
+import com.jian.utils.IdGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,7 @@ public class StoryController {
     public ResultData<Void> addStory(StoryDto storyDto){
 
         //生成故事编号
-        String sid = "2222234";
+        String sid = IdGenerate.sid();
         //获取故事发布时间
         Date createTime = new Date();
         Date updateTime = new Date();

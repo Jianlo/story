@@ -7,6 +7,7 @@ import com.jian.entity.Reading;
 import com.jian.entity.Story;
 import com.jian.service.ReadingService;
 import com.jian.service.StoryService;
+import com.jian.utils.IdGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class ReadingController {
             //新增一条阅读记录
             Reading new_reading = new Reading();
             //生成记录编号
-            String readId = "4252432";
+            String readId = IdGenerate.readId();
             new_reading.setReadId(readId);
             new_reading.setSid(readingDto.getSid());
             new_reading.setReader(readingDto.getReader());

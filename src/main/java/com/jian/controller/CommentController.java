@@ -8,6 +8,7 @@ import com.jian.entity.Comment;
 import com.jian.entity.Story;
 import com.jian.service.CommentService;
 import com.jian.service.StoryService;
+import com.jian.utils.IdGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class CommentController {
 
         Comment comment = new Comment();
         //生成评论编号
-        String commentId = "890708";
+        String commentId = IdGenerate.commentId();
         comment.setCommentId(commentId);
         comment.setSid(commentDto.getSid());
         comment.setCommenter(commentDto.getCommenter());

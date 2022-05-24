@@ -6,6 +6,7 @@ import com.jian.dto.ProfileDto;
 import com.jian.dto.SignUpDto;
 import com.jian.entity.User;
 import com.jian.service.UserService;
+import com.jian.utils.IdGenerate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,8 @@ public class UserController {
             String defaultPhotoUrl = "images/profile.jpg";
 
             //为新用户生成唯一uid
-            user.setUid("322342");
+            String uid = IdGenerate.uid();
+            user.setUid(uid);
             //设置用户名
             user.setUsername(signUpDto.getUsername());
             //设置密码

@@ -7,6 +7,7 @@ import com.jian.entity.Love;
 import com.jian.entity.Story;
 import com.jian.service.LoveService;
 import com.jian.service.StoryService;
+import com.jian.utils.IdGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class LoveController {
         //新建一条点赞记录
         Love love = new Love();
         //生成记录编号
-        String loveId = "1344343";
+        String loveId = IdGenerate.loveId();
         love.setLoveId(loveId);
         love.setSid(loveDto.getSid());
         love.setFans(loveDto.getFans());

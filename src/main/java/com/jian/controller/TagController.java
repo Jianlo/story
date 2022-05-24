@@ -5,6 +5,7 @@ import com.jian.base.ResultData;
 import com.jian.base.StatusCode;
 import com.jian.entity.Tag;
 import com.jian.service.TagService;
+import com.jian.utils.IdGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class TagController {
     public ResultData<Void> addTag(@RequestParam String tagName){
 
         //生成标签编号
-        String tid = "66663443";
+        String tid = IdGenerate.tid();
         Tag tag = new Tag();
         tag.setTid(tid);
         tag.setTagName(tagName);

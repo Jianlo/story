@@ -1,4 +1,5 @@
 import com.jian.base.ResultData;
+import com.jian.utils.IdGenerate;
 import org.junit.Test;
 
 import java.util.Date;
@@ -11,7 +12,6 @@ public class ResultDataTest {
 
     @Test
     public void timeTest(){
-        Date date = new Date();
-        System.out.println(date);
+        System.out.println(IdGenerate.uid());
     }
 }
