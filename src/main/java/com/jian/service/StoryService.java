@@ -46,18 +46,18 @@ public interface StoryService {
     PageInfo<Story> findAllByActionId(StoryPageDto storyPageDto);
 
     /**
-     * 按作者username查询故事
+     * 按作者用户名查询故事，支持模糊查询
      * @param storyConditionQueryDto
      * @return List<Story>
      */
     PageInfo<Story> findByUsername(StoryConditionQueryDto storyConditionQueryDto);
 
     /**
-     * 按故事标题查询故事，支持模糊查询
+     * 按故事标题或作者用户名查询故事，支持模糊查询
      * @param storyConditionQueryDto
      * @return List<Story>
      */
-    PageInfo<Story> findByTitle(StoryConditionQueryDto storyConditionQueryDto);
+    PageInfo<Story> findByInput(StoryConditionQueryDto storyConditionQueryDto);
 
     /**
      * 按标签查询故事

@@ -32,7 +32,7 @@
 
 
     <nav class="navbar navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">story</a>
 
         <div class="dropdown">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
@@ -43,8 +43,8 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">修改信息</a>
-                <a class="dropdown-item" href="#">退出</a>
+                <a class="dropdown-item" href="##">个人中心</a>
+                <a class="dropdown-item" href="##"  th:href="@{/logout}">退出</a>
             </div>
         </div>
 
@@ -66,41 +66,9 @@
             </div>
         </div>
         <div class="row mb-3 ml-5">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="青春" checked>
-                <label class="form-check-label" for="exampleRadios1">
-                    青春
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="家庭">
-                <label class="form-check-label" for="exampleRadios2">
-                    家庭
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="人生">
-                <label class="form-check-label" for="exampleRadios3">
-                    人生
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="校园">
-                <label class="form-check-label" for="exampleRadios4">
-                    校园
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="职场">
-                <label class="form-check-label" for="exampleRadios5">
-                    职场
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios6" value="童年">
-                <label class="form-check-label" for="exampleRadios6">
-                    童年
-                </label>
+            <div class="form-check form-check-inline" th:each="tag:${tagList}">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" th:value="${tag.tagName}" checked>
+                <label class="form-check-label" for="exampleRadios1" th:text="${tag.tagName}"></label>
             </div>
         </div>
         <!-- 文章的主体内容 textarea -->

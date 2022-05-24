@@ -29,12 +29,19 @@
     </update>
 
     <select id="findAllByActionId" resultType="com.jian.entity.Story">
-        select * from story.story order by createTime desc
-        <choose>
-            <when test="actionId == 1">,readNum desc</when>
-            <when test="actionId == 2">,commentNum desc</when>
-            <when test="actionId == 3">,loveNum desc</when>
-        </choose>
+        <if test="actionId == 1">
+            select * from story.story order by createTime desc
+        </if>
+        <if test="actionId == 2">
+            select * from story.story order by readNum desc,createTime desc
+        </if>
+
+<!--        <if test="actionId == 3">-->
+<!--            select * from story.story order by createTime desc-->
+<!--        </if>-->
+<!--        <if test="actionId == 4">-->
+<!--            select * from story.story order by createTime desc-->
+<!--        </if>-->
     </select>
 
     <select id="findBySid" resultType="com.jian.entity.Story">
@@ -42,11 +49,14 @@
     </select>
 
     <select id="findByUsername" resultType="com.jian.entity.Story">
-        select * from story.story where author=#{username} order by createTime desc
+        select * from story.story where author like concat('%',#{username},'%') order by createTime desc
     </select>
 
-    <select id="findByTitle" resultType="com.jian.entity.Story">
-        select * from story.story where title like concat('%',#{title},'%') order by createTime desc
+    <select id="findByInput" resultType="com.jian.entity.Story">
+        select * from story.story where title like concat('%',#{input},'%')
+        union all
+        select * from story.story where author like concat('%',#{input},'%')
+        order by createTime desc
     </select>
 
     <select id="findByTag" resultType="com.jian.entity.Story">

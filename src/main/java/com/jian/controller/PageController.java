@@ -7,6 +7,7 @@ import com.jian.entity.Subscribe;
 import com.jian.entity.User;
 import com.jian.service.StoryService;
 import com.jian.service.SubscribeService;
+import com.jian.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class PageController {
     private StoryService storyService;
     @Autowired
     private SubscribeService subscribeService;
+
+    @Autowired
+    private TagService tagService;
 
     //登录界面
     @RequestMapping("/")
@@ -48,7 +52,9 @@ public class PageController {
 
     //写故事界面
     @RequestMapping("/write")
-    public String write(){
+    public String write(Model model){
+        //获取标签列表
+        model.addAttribute("tagList",tagService.findAll());
         return "editor";
     }
 
@@ -81,6 +87,9 @@ public class PageController {
         String owner = user.getUsername();
         List<Subscribe> subscribeList = subscribeService.findAll(owner);
         model.addAttribute("subscribeList",subscribeList);
+
+        //查询标签列表
+        model.addAttribute("tagList",tagService.findAll());
 
         return "index";
     }

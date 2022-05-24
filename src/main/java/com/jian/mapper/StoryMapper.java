@@ -2,6 +2,7 @@ package com.jian.mapper;
 
 import com.jian.entity.Story;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -44,19 +45,21 @@ public interface StoryMapper {
      */
     List<Story> findAllByActionId(int actionId);
 
+
     /**
-     * 按作者username查询故事
+     * 按作者用户名查询故事，支持模糊查询
      * @param username
      * @return List<Story>
      */
     List<Story> findByUsername(String username);
 
+
     /**
-     * 按故事标题查询故事，支持模糊查询
-     * @param title
+     * 按故事标题或作者用户名查询故事，支持模糊查询
+     * @param input
      * @return List<Story>
      */
-    List<Story> findByTitle(String title);
+    List<Story> findByInput(@Param("input") String input);
 
     /**
      * 按标签查询故事

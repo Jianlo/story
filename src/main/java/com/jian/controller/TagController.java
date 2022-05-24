@@ -21,7 +21,7 @@ public class TagController {
     public ResultData<Void> addTag(@RequestParam String tagName){
 
         //生成标签编号
-        String tid = "23434";
+        String tid = "66663443";
         Tag tag = new Tag();
         tag.setTid(tid);
         tag.setTagName(tagName);

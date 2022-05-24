@@ -53,9 +53,9 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public PageInfo<Story> findByTitle(StoryConditionQueryDto storyConditionQueryDto) {
+    public PageInfo<Story> findByInput(StoryConditionQueryDto storyConditionQueryDto) {
         PageHelper.startPage(storyConditionQueryDto.getPageIndex(),storyConditionQueryDto.getPageSize());
-        return new PageInfo<>(storyMapper.findByTitle(storyConditionQueryDto.getCondition()));
+        return new PageInfo<>(storyMapper.findByInput(storyConditionQueryDto.getCondition()));
     }
 
     @Override

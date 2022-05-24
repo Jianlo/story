@@ -51,7 +51,7 @@
   <body style="background-color: #f6f6f6;">
 
 <nav class="navbar navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">story</a>
 
   <div class="dropdown">
     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
@@ -80,23 +80,18 @@
       <!--文章模块（左）-->
       <div class="col-8 bg-dark">
         <!-- 搜索框-->
-        <form class="form-inline my-2 form-group">
-          <input class="form-control mr-sm-2 col-10" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light my-sm-0 col-1" type="submit">
+        <form class="form-inline my-2 mb-3 form-group">
+          <input class="form-control mr-sm-2 col-10" type="search" placeholder="搜索故事..." aria-label="Search">
+          <a href="##" class="btn btn-outline-light my-sm-0 col-1" onclick="storyPart(this)" label="5">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
-          </button>
+          </a>
         </form>
 
         <!-- 标签组-->
         <div class="d-inline">
-          <a href="##"><button class="btn btn-lg btn-secondary mr-2"></button></a>
-          <a href="##"><button class="btn btn-lg btn-primary mr-2"></button></a>
-          <a href="##"><button class="btn btn-lg btn-danger mr-2"></button></a>
-          <a href="##"><button class="btn btn-lg btn-warning mr-2"></button></a>
-          <a href="##"><button class="btn btn-lg btn-light mr-2"></button></a>
-          <a href="##"><button class="btn btn-lg btn-success mr-2"></button></a>
+          <a href="##" th:each="tag:${tagList}"><button onclick="storyPart(this)" label="4" class="btn btn-sm btn-light mr-2" th:text="${tag.tagName}">青春</button></a>
         </div>
 
         <!-- 导航条-->
@@ -122,7 +117,7 @@
                 </div>
                 <h6 class="card-title" th:text="${story.title}">Card Title</h6>
                 <small class="card-subtitle ml-3 text-muted" th:text="${story.storyTag}">青春</small>
-                <div id="doc-content" th:id="'content'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">
+                <div th:id="'content'+${story.id}" class="card-text getid" style="height:100px;overflow-y:hidden;">
                   <textarea style="display: none" th:text="${story.content}">
                      Some quick example text to build on the card title and make up the bulk of the card's content.
                   </textarea>
@@ -229,7 +224,7 @@
             <nav class="navbar">
               <form class="form-inline">
                 <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3">
+                  <input type="text" class="form-control" placeholder="用户名..." aria-describedby="sizing-addon3">
                 </div>
                 <button class="btn  my-2 my-sm-0 col-2" type="submit">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -298,8 +293,7 @@
       //循环解析ul中每个li里的markdown
       function markdownToHtml() {
         var lis = document.getElementById('storyul').getElementsByClassName('storyli')
-        console.log("这个测试----------------------")
-        console.log(lis)
+
         for (var i=0;i<lis.length;i++){
 
           var id = lis[i].getElementsByClassName('getid')[0].getAttribute("id")
@@ -555,6 +549,24 @@
           }
           url = "story/findByUsername"
         }
+        if (choose === "4"){
+          condition = e.innerText
+          obj = {
+            'pageIndex':pageIndex,
+            'pageSize':pageSize,
+            'condition':condition
+          }
+          url = "story/findByTag"
+        }
+        if (choose === "5"){
+          condition = e.previousElementSibling.value
+          obj = {
+            'pageIndex':pageIndex,
+            'pageSize':pageSize,
+            'condition':condition
+          }
+          url = "story/findByInput"
+        }
 
 
         obj = JSON.stringify(obj)
@@ -581,7 +593,7 @@
                       '                </div>\n' +
                       '                <h6 class="card-title">' + myStoryList[k].title + '</h6>\n' +
                       '                <small class="card-subtitle ml-3 text-muted">' + myStoryList[k].storyTag + '</small>\n' +
-                      '                <div id="doc-content" id="content' + myStoryList[k].id +'"' + ' class="card-text getid" style="height:100px;overflow-y:hidden;">\n' +
+                      '                <div id="content' + myStoryList[k].id +'"' + ' class="card-text getid" style="height:100px;overflow-y:hidden;">\n' +
                       '                  <textarea style="display: none">' + myStoryList[k].content + '  </textarea>\n' +
                       '                </div>\n' +
                       '                <!--阅读量、评论量、点赞量-->\n' +
@@ -595,7 +607,7 @@
                       '                    <span class="text-muted" id="read'+ myStoryList[k].id + '">' + myStoryList[k].readNum + '</span>\n' +
                       '                  </a>\n' +
                       '                  <!--评论-->\n' +
-                      '                  <a class="card-link" onclick="comment(this)" data-toggle="collapse" href="#collapse' + myStoryList[k].id + '" ' + 'label="' + myStoryList[k].id + '" ' + 'name="collapse' + myStoryList[k].id + '">\n' +
+                      '                  <a class="card-link" onclick="comment(this)" data-toggle="collapse" href="#collapse' + myStoryList[k].id + '" ' + 'label="' + myStoryList[k].sid + '" ' + 'name="collapse' + myStoryList[k].id + '">\n' +
                       '                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chat-dots-fill" viewBox="0 0 16 16" id="comment_icon">\n' +
                       '                      <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>\n' +
                       '                    </svg>\n' +
@@ -627,7 +639,7 @@
                       '               <ul class="list-group"></ul>' +
                       '               <form class="form-inline my-2 form-group">\n' +
                       '                <input class="form-control mr-sm-2 col-10" type="search" placeholder="评论..." aria-label="Search">\n' +
-                      '                <a href="##" class="btn my-sm-0 col-1" onclick="pinglun(this)" label="' + myStoryList[k].id + '" ' + 'name="collapse' + myStoryList[k].id + '" aria-label="comment' + myStoryList[k].id + '">' +
+                      '                <a href="##" class="btn my-sm-0 col-1" onclick="pinglun(this)" label="' + myStoryList[k].sid + '" ' + 'name="collapse' + myStoryList[k].id + '" aria-label="comment' + myStoryList[k].id + '">' +
                       '                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">\n' +
                       '                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>\n' +
                       '                  </svg>\n' +
@@ -656,7 +668,7 @@
       function comment(e) {
 
         var icon_color = e.firstElementChild
-        console.log(icon_color)
+
         if (icon_color.style.fill=="black"){
           icon_color.style.fill="gray"
         }
@@ -675,7 +687,7 @@
           data:'sid='+sid,
           dataType:'json',
           success:function (data) {
-            console.log(data)
+            // console.log(data)
 
             var commentList = data.data
             console.log(commentList)
@@ -696,7 +708,9 @@
             })
 
             var comment_panel = e.getAttribute("name")
-            console.log(comment_panel)
+
+            // console.log(comment_panel)
+
             document.getElementById(comment_panel).firstElementChild.innerHTML = html
 
             //为新生成的元素配置悬浮窗口
